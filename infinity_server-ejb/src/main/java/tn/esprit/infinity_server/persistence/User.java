@@ -1,17 +1,21 @@
 package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
-import java.util.Date;
+
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 public class User implements Serializable {
 
 	/**
@@ -19,6 +23,7 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/****************** User *********************/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
@@ -47,61 +52,112 @@ public class User implements Serializable {
 	// email
 	@Column(name = "email", nullable = true, length = 50)
 	private String email;
+	/*********************** Admin ****************************/
+	// role
+	@Column(name = "role", nullable = true, length = 20)
+	private String role;
+	/************************ Trador ******************************/
+	// role
+	@Column(name = "grade")
+	private int grade;
+	// experience Year
+	@Column(name = "experienceYear")
+	private int experienceYear;
+
 	public int getId() {
 		return id;
+	}		
+
+	public String getRole() {
+		return role;
 	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+
+	public int getExperienceYear() {
+		return experienceYear;
+	}
+
+	public void setExperienceYear(int experienceYear) {
+		this.experienceYear = experienceYear;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getFirstname() {
 		return firstname;
 	}
+
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
+
 	public String getLastname() {
 		return lastname;
 	}
+
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
 	public String getLogin() {
 		return login;
 	}
+
 	public void setLogin(String login) {
 		this.login = login;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public boolean isActivate() {
 		return activate;
 	}
+
 	public void setActivate(boolean activate) {
 		this.activate = activate;
 	}
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
 }
