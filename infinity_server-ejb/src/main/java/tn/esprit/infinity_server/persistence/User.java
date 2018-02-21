@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,73 +24,57 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/****************** User *********************/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private int id;
+
 	// firstname
 	@Column(name = "firstname", nullable = true, length = 50)
 	private String firstname;
+
 	// lastname
 	@Column(name = "lastname", nullable = true, length = 50)
 	private String lastname;
+
 	// login
 	@Column(name = "login", nullable = true, length = 50, unique = true)
 	private String login;
+
 	// password
 	@Column(name = "password", nullable = true, length = 50)
 	private String password;
+
 	// activate
 	@Column(name = "activate", nullable = true)
 	private boolean activate;
+
 	// code
 	@Column(name = "code", nullable = true, length = 50)
 	private String code;
+
 	// phoneNumber
 	@Column(name = "phoneNumber", nullable = true, length = 9)
 	private String phoneNumber;
+
 	// email
 	@Column(name = "email", nullable = true, length = 50)
 	private String email;
-	/*********************** Admin ****************************/
-	// role
-	@Column(name = "role", nullable = true, length = 20)
-	private String role;
-	/************************ Trador ******************************/
-	// role
-	@Column(name = "grade")
-	private int grade;
-	// experience Year
-	@Column(name = "experienceYear")
-	private int experienceYear;
+
+	// address
+	@OneToOne
+	private Address address;
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	public int getId() {
 		return id;
-	}		
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public int getGrade() {
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
-
-	public int getExperienceYear() {
-		return experienceYear;
-	}
-
-	public void setExperienceYear(int experienceYear) {
-		this.experienceYear = experienceYear;
 	}
 
 	public void setId(int id) {
