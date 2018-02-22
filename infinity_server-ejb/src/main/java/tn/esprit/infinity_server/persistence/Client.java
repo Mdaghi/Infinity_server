@@ -28,7 +28,7 @@ public class Client extends User implements Serializable {
 	private List<CurrencyAccount> currencies;
 
 	@ManyToOne
-	private Trader trador;
+	private Trader trader;
 
 	public List<CurrencyAccount> getCurrencies() {
 		return currencies;
@@ -38,12 +38,12 @@ public class Client extends User implements Serializable {
 		this.currencies = currencies;
 	}
 
-	public Trader getTrador() {
-		return trador;
+	public Trader getTrader() {
+		return trader;
 	}
 
-	public void setTrador(Trader trador) {
-		this.trador = trador;
+	public void setTrador(Trader trader) {
+		this.trader = trader;
 	}
 
 	private static final long serialVersionUID = 1L;

@@ -22,7 +22,7 @@ public class Trader extends User implements Serializable {
 	@Column(name = "experienceYear")
 	private int experienceYear;
 
-	@OneToMany(mappedBy = "trador")
+	@OneToMany(mappedBy = "trader")
 	private List<Client> clients;
 
 	public int getGrade() {
