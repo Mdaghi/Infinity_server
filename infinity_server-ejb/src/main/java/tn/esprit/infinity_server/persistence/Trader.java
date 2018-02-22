@@ -7,11 +7,11 @@ import javax.persistence.*;
 import tn.esprit.infinity_server.persistence.User;
 
 /**
- * Entity implementation class for Entity: Trador
+ * Entity implementation class for Entity: Trader
  *
  */
 @Entity
-public class Trador extends User implements Serializable {
+public class Trader extends User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public class Trador extends User implements Serializable {
 		this.clients = clients;
 	}
 
-	public Trador() {
+	public Trader() {
 		super();
 	}
 
