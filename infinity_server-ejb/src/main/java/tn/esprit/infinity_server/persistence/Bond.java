@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "bond")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Bond implements Serializable{
+public class Bond implements Serializable {
 
 	/**
 	 * 
@@ -26,15 +26,24 @@ public class Bond implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private int id;
-	@Column(name = "startdate", nullable = false)
-	private LocalDateTime startDate;
-	@Column(name = "maturitydate", nullable = false)	
-	private LocalDateTime maturityDate;
+	/* the global amount proposed by a firm */
 	@Column(name = "amount", nullable = false)
-	private double amount;
+	private float amount;
+
+	/* nominal is the principal amount of one bond */
+	@Column(name = "nominal", nullable = false)
+	private float nominal;
+
+	@Column(name = "maturitydate", nullable = false)
+	private LocalDateTime maturityDate;
+
+	@Column(name = "coupon", nullable = false)
+	private double coupon;
+
 	@Column(name = "numberofshares", nullable = false)
 	private int numberOfShares;
-	@Column(name = "priceofshare", nullable = false)
-	private double priceOfShare;
-	
+
+	@Column(name = "type", nullable = false)
+	private String type;
+
 }
