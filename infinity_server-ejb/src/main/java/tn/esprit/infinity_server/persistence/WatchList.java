@@ -16,6 +16,10 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class WatchList implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3979120002611588436L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
