@@ -67,7 +67,10 @@ public class User implements Serializable {
 	@OneToOne
 	private Address address;
 
+	@OneToMany(mappedBy="user")
 	private List<SaveArticle> saveArticles;
+	
+	@OneToMany(mappedBy="user")
 	private List<SubscribeNewsSource> subscribeNewsSource;
 
 	public Address getAddress() {
@@ -150,7 +153,7 @@ public class User implements Serializable {
 		this.email = email;
 	}
 	
-	@OneToMany(mappedBy="user")
+	
 	public List<SaveArticle> getSaveArticles() {
 		return saveArticles;
 	}
@@ -159,7 +162,7 @@ public class User implements Serializable {
 		this.saveArticles = saveArticles;
 	}
 
-	@OneToMany(mappedBy="user")
+	
 	public List<SubscribeNewsSource> getSubscribeNewsSource() {
 		return subscribeNewsSource;
 	}

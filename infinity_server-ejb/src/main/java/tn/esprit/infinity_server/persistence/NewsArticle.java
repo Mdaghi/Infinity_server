@@ -13,19 +13,33 @@ public class NewsArticle implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private String author;
-	private String title;
-	private String description;
-	private String url;
-	private String urlToImage;
-	private String publishedAt;
-
-	private List<SaveArticle> saveArticles;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
+	private int id;
+	
+	@Column(name = "AUTHOR", unique = false, nullable = false, insertable = true, updatable = true, length = 100)
+	private String author;
+	
+	@Column(name = "TITLE", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
+	private String title;
+	
+	@Column(name = "DESCRIPTION", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
+	private String description;
+	
+	@Column(name = "URL", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	private String url;
+	
+	@Column(name = "URL_TO_IMAGE", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	private String urlToImage;
+	
+	@Column(name = "PUBLISH_AT", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	private String publishedAt;
+
+	@OneToMany(mappedBy="article")
+	private List<SaveArticle> saveArticles;
+
+	
 	public int getId() {
 		return id;
 	}
@@ -34,7 +48,7 @@ public class NewsArticle implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "AUTHOR", unique = false, nullable = false, insertable = true, updatable = true, length = 100)
+	
 	public String getAuthor() {
 		return author;
 	}
@@ -43,7 +57,7 @@ public class NewsArticle implements Serializable {
 		this.author = author;
 	}
 
-	@Column(name = "TITLE", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
+	
 	public String getTitle() {
 		return title;
 	}
@@ -52,7 +66,7 @@ public class NewsArticle implements Serializable {
 		this.title = title;
 	}
 
-	@Column(name = "DESCRIPTION", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
+	
 	public String getDescription() {
 		return description;
 	}
@@ -61,7 +75,7 @@ public class NewsArticle implements Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "URL", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	
 	public String getUrl() {
 		return url;
 	}
@@ -70,7 +84,7 @@ public class NewsArticle implements Serializable {
 		this.url = url;
 	}
 
-	@Column(name = "URL_TO_IMAGE", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	
 	public String getUrlToImage() {
 		return urlToImage;
 	}
@@ -79,7 +93,7 @@ public class NewsArticle implements Serializable {
 		this.urlToImage = urlToImage;
 	}
 
-	@Column(name = "PUBLISH_AT", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	
 	public String getPublishedAt() {
 		return publishedAt;
 	}
@@ -89,7 +103,7 @@ public class NewsArticle implements Serializable {
 	}
 
 	
-	@OneToMany(mappedBy="article")
+	
 	public List<SaveArticle> getSaveArticles() {
 		return saveArticles;
 	}

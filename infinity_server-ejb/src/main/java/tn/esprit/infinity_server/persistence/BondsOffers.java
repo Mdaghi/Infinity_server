@@ -14,6 +14,10 @@ import javax.persistence.Table;
 @Table(name="bondsoffers")
 public class BondsOffers implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7390501749465285661L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;

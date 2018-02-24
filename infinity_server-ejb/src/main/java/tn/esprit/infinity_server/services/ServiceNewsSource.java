@@ -3,21 +3,17 @@ package tn.esprit.infinity_server.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import tn.esprit.infinity_server.persistence.NewsArticle;
-import tn.esprit.infinity_server.persistence.NewsSource;
-import tn.esprit.infinity_server.persistence.SubscribeNewsSource;
-import tn.esprit.infinity_server.persistence.User;
-import tn.esprit.infinity_server.interfaces.NewsSourceRemote;
-
-
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import tn.esprit.infinity_server.interfaces.NewsSourceRemote;
+import tn.esprit.infinity_server.persistence.NewsSource;
+import tn.esprit.infinity_server.persistence.SubscribeNewsSource;
+import tn.esprit.infinity_server.persistence.User;
+
 @Stateless
-@LocalBean
 public class ServiceNewsSource implements NewsSourceRemote {
 
 	@PersistenceContext(unitName = "infinity_server-ejb")
@@ -66,7 +62,7 @@ public class ServiceNewsSource implements NewsSourceRemote {
 		SubscribeNewsSource sns = new SubscribeNewsSource();
 		sns.setSource(source);
 		sns.setUser(user);
-		em.persist(sns);
+		em.persist(sns);	
 		em.flush();
 	}
 

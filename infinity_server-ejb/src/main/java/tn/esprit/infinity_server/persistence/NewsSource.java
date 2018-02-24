@@ -9,15 +9,25 @@ import javax.persistence.*;
 @Table(name = "NEWS_SOURCE")
 public class NewsSource implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private String url;
-	private String description;
-	private String image;
-	private List<SubscribeNewsSource> subscribeNewsSource;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
+	private int id;
+	
+	@Column(name = "URL", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	private String url;
+	
+	@Column(name = "DESCRIPTION", unique = false, nullable = false, insertable = true, updatable = true, length = 600)
+	private String description;
+	
+	@Column(name = "IMAGE", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	private String image;
+	
+	@OneToMany(mappedBy="source")
+	private List<SubscribeNewsSource> subscribeNewsSource;
+
+	
 	public int getId() {
 		return id;
 	}
@@ -26,7 +36,7 @@ public class NewsSource implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "URL", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	
 	public String getUrl() {
 		return url;
 	}
@@ -35,7 +45,7 @@ public class NewsSource implements Serializable {
 		this.url = url;
 	}
 
-	@Column(name = "DESCRIPTION", unique = false, nullable = false, insertable = true, updatable = true, length = 600)
+	
 	public String getDescription() {
 		return description;
 	}
@@ -44,7 +54,7 @@ public class NewsSource implements Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "IMAGE", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	
 	public String getImage() {
 		return image;
 	}
@@ -53,7 +63,7 @@ public class NewsSource implements Serializable {
 		this.image = image;
 	}
 
-	@OneToMany(mappedBy="source")
+	
 	public List<SubscribeNewsSource> getSubscribeNewsSource() {
 		return subscribeNewsSource;
 	}
