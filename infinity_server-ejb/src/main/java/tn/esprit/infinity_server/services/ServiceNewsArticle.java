@@ -31,7 +31,7 @@ import java.util.Arrays;
 @LocalBean
 public class ServiceNewsArticle implements NewsArticleRemote {
 	
-	@PersistenceContext(unitName = "tn.firstProject")
+	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
     private static final int STATUS_OK = 200;
 

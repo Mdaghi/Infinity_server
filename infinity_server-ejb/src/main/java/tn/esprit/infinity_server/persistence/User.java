@@ -1,6 +1,7 @@
 package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -64,6 +66,9 @@ public class User implements Serializable {
 	// address
 	@OneToOne
 	private Address address;
+
+	private List<SaveArticle> saveArticles;
+	private List<SubscribeNewsSource> subscribeNewsSource;
 
 	public Address getAddress() {
 		return address;
@@ -143,6 +148,24 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@OneToMany(mappedBy="user")
+	public List<SaveArticle> getSaveArticles() {
+		return saveArticles;
+	}
+
+	public void setSaveArticles(List<SaveArticle> saveArticles) {
+		this.saveArticles = saveArticles;
+	}
+
+	@OneToMany(mappedBy="user")
+	public List<SubscribeNewsSource> getSubscribeNewsSource() {
+		return subscribeNewsSource;
+	}
+
+	public void setSubscribeNewsSource(List<SubscribeNewsSource> subscribeNewsSource) {
+		this.subscribeNewsSource = subscribeNewsSource;
 	}
 
 }

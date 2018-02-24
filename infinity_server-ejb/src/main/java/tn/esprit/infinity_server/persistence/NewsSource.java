@@ -1,6 +1,7 @@
 package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ public class NewsSource implements Serializable {
 	private String url;
 	private String description;
 	private String image;
+	private List<SubscribeNewsSource> subscribeNewsSource;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +51,15 @@ public class NewsSource implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	@OneToMany(mappedBy="source")
+	public List<SubscribeNewsSource> getSubscribeNewsSource() {
+		return subscribeNewsSource;
+	}
+
+	public void setSubscribeNewsSource(List<SubscribeNewsSource> subscribeNewsSource) {
+		this.subscribeNewsSource = subscribeNewsSource;
 	}
 
 }

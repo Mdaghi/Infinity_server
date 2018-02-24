@@ -20,7 +20,7 @@ import javax.persistence.TypedQuery;
 @LocalBean
 public class ServiceNewsSource implements NewsSourceRemote {
 
-	@PersistenceContext(unitName = "tn.firstProject")
+	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
 
 	@Override
