@@ -13,4 +13,6 @@ public interface NewsSourceRemote {
 	public void selectNewsSource(User user, NewsSource source);
 	public void unselectNewsSource(User user, NewsSource source);
 	public void addNewsSource(NewsSource ns);
+	public void updateNewsSource(NewsSource ns);
+	public void deleteNewsSource(NewsSource ns);
 }

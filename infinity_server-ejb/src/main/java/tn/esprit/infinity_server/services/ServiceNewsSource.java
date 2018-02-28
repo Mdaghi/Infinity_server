@@ -72,7 +72,20 @@ public class ServiceNewsSource implements NewsSourceRemote {
 	@Override
 	public void addNewsSource(NewsSource ns)
 	{
-		em.persist(ns);
+		em.merge(ns);
 	}
 	
+	@Override
+	public void deleteNewsSource(NewsSource ns)
+	{
+		em.remove(ns);
+		em.merge(ns);
+	}
+
+	@Override
+	public void updateNewsSource(NewsSource ns) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
