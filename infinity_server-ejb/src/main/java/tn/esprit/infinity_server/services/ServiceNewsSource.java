@@ -77,6 +77,7 @@ public class ServiceNewsSource implements NewsSourceRemote {
 	@Override
 	public void deleteNewsSource(NewsSource ns)
 	{
+		//
 		em.remove(ns);
 		em.merge(ns);
 	}
