@@ -39,8 +39,8 @@ public class ServiceNewsArticle implements NewsArticleRemote {
 			list = articleRequest(source.getUrl());
 		} catch (MalformedURLException | UnirestException e) {
             System.out.println("Bad URL: " + source.getUrl());
-		}*/
-		
+		}
+		*/
 		return list;
 	}
 

@@ -10,11 +10,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.infinity_server.interfaces.NewsSourceRemote;
-import tn.esprit.infinity_server.persistence.Address;
 import tn.esprit.infinity_server.persistence.NewsSource;
 import tn.esprit.infinity_server.persistence.SubscribeNewsSource;
 import tn.esprit.infinity_server.persistence.User;
-
+	
 @Stateless
 @LocalBean
 public class ServiceNewsSource implements NewsSourceRemote {
