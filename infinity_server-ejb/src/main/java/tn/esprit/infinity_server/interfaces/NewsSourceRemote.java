@@ -3,9 +3,7 @@ package tn.esprit.infinity_server.interfaces;
 import java.util.List;
 
 import javax.ejb.Remote;
-
-import tn.esprit.infinity_server.persistence.NewsSource;
-import tn.esprit.infinity_server.persistence.User;
+import tn.esprit.infinity_server.persistence.*;
 
 @Remote
 public interface NewsSourceRemote {
@@ -14,4 +12,5 @@ public interface NewsSourceRemote {
 	public void userSubscribeNewsSource(User user, NewsSource source);
 	public void selectNewsSource(User user, NewsSource source);
 	public void unselectNewsSource(User user, NewsSource source);
+	public void addNewsSource(NewsSource ns);
 }

@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,15 +24,17 @@ import tn.esprit.infinity_server.persistence.SaveArticle;
 import tn.esprit.infinity_server.persistence.User;
 
 @Stateless
+@LocalBean
 public class ServiceNewsArticle implements NewsArticleRemote {
 	
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
-    private static final int STATUS_OK = 200;
 
 	@Override
-	public List<NewsArticle> getAllArticles(NewsSource source) {
+	public List<NewsArticle> getAllArticles() {
 		List <NewsArticle> list = new ArrayList<>();
+		TypedQuery<NewsArticle> query = em.createQuery("SELECT na FROM NewsArticle na", NewsArticle.class);
+		list = query.getResultList();
 		/*try {
 			list = articleRequest(source.getUrl());
 		} catch (MalformedURLException | UnirestException e) {
@@ -56,7 +59,7 @@ public class ServiceNewsArticle implements NewsArticleRemote {
 		sa.setArticle(article);
 		sa.setUser(user);
 		em.persist(sa);
-		em.flush();	
+		em.flush();
 	}
 
 	@Override
@@ -65,7 +68,7 @@ public class ServiceNewsArticle implements NewsArticleRemote {
 		sa.setArticle(article);
 		sa.setUser(user);
 		em.remove(sa);
-		em.flush();		
+		em.flush();
 	}
 	
     /*static List<NewsArticle> articleRequest(String url) throws UnirestException, MalformedURLException {
