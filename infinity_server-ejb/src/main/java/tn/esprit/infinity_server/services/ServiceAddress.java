@@ -18,7 +18,6 @@ import tn.esprit.infinity_server.persistence.Address;
  * Session Bean implementation class ServiceAddress
  */
 @Stateless
-@LocalBean
 public class ServiceAddress implements AddressRemote, AddressLocal {
 
 	@PersistenceContext(unitName = "infinity_server-ejb")
