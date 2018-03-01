@@ -24,15 +24,17 @@ public class ServiceNewsSource implements NewsSourceRemote {
 	@Override
 	public List<NewsSource> getAllNewsSource() {
 		List<NewsSource> list = new ArrayList<>();
-		list=  em.createQuery("select a from NewsSource a", NewsSource.class)
+		list=  em.createQuery("SELECT NS FROM " + NewsSource.class.getName() + " NS", NewsSource.class)
 				.getResultList();
 		return list;
 	}
 
 	@Override
-	public List<NewsSource> getSubscribedNewsSource(User user) {
-		//List<NewsSource> list = em.createQuery("SELECT NS, U FROM NewsSource NS INNER JOIN c1.neighbors c2").getResultList();
-		return null;
+	public List<SubscribeNewsSource> getSubscribedNewsSource(User user) {
+		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM " + SubscribeNewsSource.class.getName() + " SN where user=:user",SubscribeNewsSource.class);
+		query.setParameter("user", user);
+		List<SubscribeNewsSource> list = query.getResultList();
+		return list;
 	}
 
 	@Override
@@ -64,28 +66,28 @@ public class ServiceNewsSource implements NewsSourceRemote {
 		SubscribeNewsSource sns = new SubscribeNewsSource();
 		sns.setSource(source);
 		sns.setUser(user);
-		em.persist(sns);	
-		em.flush();
+		em.merge(sns);	
 	}
 	
 	@Override
-	public void addNewsSource(NewsSource ns)
-	{
+	public void addNewsSource(NewsSource ns) {
 		em.merge(ns);
 	}
 	
 	@Override
 	public void deleteNewsSource(NewsSource ns)
 	{
-		//
-		em.remove(ns);
-		em.merge(ns);
+		em.remove(em.contains(ns) ? ns : em.merge(ns));
 	}
 
 	@Override
 	public void updateNewsSource(NewsSource ns) {
-		// TODO Auto-generated method stub
-		
+		em.merge(ns);
+	}
+
+	@Override
+	public void testAddUser(User user) {
+		em.merge(user);
 	}
 
 }

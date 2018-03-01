@@ -15,12 +15,12 @@ public class SubscribeNewsSource implements Serializable {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "ID_NEWS_SOURCE", referencedColumnName = "ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ID_NEWS_SOURCE", referencedColumnName = "ID")
 	private NewsSource source;
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "ID_USER", referencedColumnName = "ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ID_USER", referencedColumnName = "ID")
 	private User user;
 	
 	@Column(name = "SELECTED")
