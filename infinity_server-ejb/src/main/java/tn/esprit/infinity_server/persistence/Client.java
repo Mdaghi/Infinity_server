@@ -29,6 +29,10 @@ public class Client extends User implements Serializable {
 
 	@ManyToOne
 	private Trader trader;
+	
+	@OneToMany
+	private List<DemandeBond> demandeBonds;
+	
 
 	public List<CurrencyAccount> getCurrencies() {
 		return currencies;
@@ -67,5 +71,15 @@ public class Client extends User implements Serializable {
 	public void setLastConnection(Date lastConnection) {
 		this.lastConnection = lastConnection;
 	}
+
+	public List<DemandeBond> getDemandeBonds() {
+		return demandeBonds;
+	}
+
+	public void setDemandeBonds(List<DemandeBond> demandeBonds) {
+		this.demandeBonds = demandeBonds;
+	}
+	
+	
 
 }
