@@ -87,4 +87,12 @@ public class Address implements Serializable {
 		this.postalCode = postalCode;
 	}
 
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", street=" + street + ", country=" + country + ", number=" + number + ", city="
+				+ city + ", postalCode=" + postalCode + "]";
+	}
+	
+	
+
 }

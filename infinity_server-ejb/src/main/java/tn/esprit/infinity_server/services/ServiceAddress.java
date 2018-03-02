@@ -8,6 +8,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.infinity_server.interfaces.AddressLocal;
@@ -62,8 +63,9 @@ public class ServiceAddress implements AddressRemote, AddressLocal {
 
 	@Override
 	public List<Address> findAllAddress() {
-		return em.createQuery("select a from Address a", Address.class)
-				.getResultList();
+		Query query = em.createQuery("SELECT a FROM Address a");
+	    List<Address> resultList = (List<Address>)query.getResultList();
+		return resultList;
 	}
 	
 

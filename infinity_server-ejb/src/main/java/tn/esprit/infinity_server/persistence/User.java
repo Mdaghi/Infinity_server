@@ -2,10 +2,13 @@ package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,14 +67,14 @@ public class User implements Serializable {
 	private String email;
 
 	// address
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Address address;
 
-	@OneToMany(mappedBy="user")
-	private List<SaveArticle> saveArticles;
-	
-	@OneToMany(mappedBy="user")
-	private List<SubscribeNewsSource> subscribeNewsSource;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<SaveArticle> saveArticles;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<SubscribeNewsSource> subscribeNewsSource;
 
 	public Address getAddress() {
 		return address;
@@ -152,22 +155,30 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	public List<SaveArticle> getSaveArticles() {
+
+	@Override
+	public String toString() {
+		String Res ="";
+		 Res+="User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", login=" + login
+				+ ", password=" + password + ", activate=" + activate + ", code=" + code + ", phoneNumber="
+				+ phoneNumber + ", email=" + email + ", address=" + address + "]";
+		 Res+="\n";
+		 return Res;
+	}
+
+	public Set<SaveArticle> getSaveArticles() {
 		return saveArticles;
 	}
 
-	public void setSaveArticles(List<SaveArticle> saveArticles) {
+	public void setSaveArticles(Set<SaveArticle> saveArticles) {
 		this.saveArticles = saveArticles;
 	}
 
-	
-	public List<SubscribeNewsSource> getSubscribeNewsSource() {
+	public Set<SubscribeNewsSource> getSubscribeNewsSource() {
 		return subscribeNewsSource;
 	}
 
-	public void setSubscribeNewsSource(List<SubscribeNewsSource> subscribeNewsSource) {
+	public void setSubscribeNewsSource(Set<SubscribeNewsSource> subscribeNewsSource) {
 		this.subscribeNewsSource = subscribeNewsSource;
 	}
 

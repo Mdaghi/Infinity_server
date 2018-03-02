@@ -54,6 +54,12 @@ public class SaveArticle implements Serializable {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+	@Override
+	public String toString() {
+		return "SaveArticle [id=" + id + ", article=" + article + ", user=" + user + ", date=" + date + "]";
+	}
+	
+	
 	
 	
 }
