@@ -16,11 +16,11 @@ public class SaveArticle implements Serializable {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "ID_NEWS_ARTICLE", referencedColumnName = "ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ID_NEWS_ARTICLE", referencedColumnName = "ID")
 	private NewsArticle article;
 	
 	@ManyToOne
-	@JoinColumn(name = "ID_USER", referencedColumnName = "ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ID_USER", referencedColumnName = "ID")
 	private User user;
 	
 	@Column(name = "DATE", unique = false, nullable = false, insertable = true, updatable = true)
@@ -55,5 +55,9 @@ public class SaveArticle implements Serializable {
 		this.date = date;
 	}
 	
+	@Override
+	public String toString() {
+		return "SaveArticle [id=" + id + ", article=" + article + ", user=" + user + ", date=" + date + "]";
+	}
 	
 }

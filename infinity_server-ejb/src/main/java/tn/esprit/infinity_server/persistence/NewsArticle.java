@@ -36,7 +36,7 @@ public class NewsArticle implements Serializable {
 	@Column(name = "PUBLISH_AT", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
 	private String publishedAt;
 
-	@OneToMany(mappedBy="article")
+	@OneToMany(mappedBy="article", cascade = CascadeType.ALL)
 	private List<SaveArticle> saveArticles;
 
 	
