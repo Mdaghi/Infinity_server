@@ -58,12 +58,6 @@ public class SaveArticle implements Serializable {
 	public String toString() {
 		return "SaveArticle [id=" + id + ", article=" + article + ", user=" + user + ", date=" + date + "]";
 	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "SaveArticle [id=" + id + ", article=" + article + ", user=" + user + ", date=" + date + "]";
-	}
+
 	
 }
