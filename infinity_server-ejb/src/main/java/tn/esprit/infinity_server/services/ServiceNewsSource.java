@@ -38,23 +38,34 @@ public class ServiceNewsSource implements NewsSourceRemote {
 	}
 
 	@Override
+	public SubscribeNewsSource getSelecteddNewsSource(User user) {
+		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM " + SubscribeNewsSource.class.getName() + " SN where user=:user and selected=:selected",SubscribeNewsSource.class);
+		query.setParameter("user", user);
+		query.setParameter("selected", true);
+		return query.getSingleResult();
+	}
+
+	@Override
 	public void selectNewsSource(User user, NewsSource source) {
 		SubscribeNewsSource sn = new SubscribeNewsSource();
-		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM SubscribeNewsSource SN where source=:source and user=:user", SubscribeNewsSource.class);
+		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM SubscribeNewsSource SN where source=:source and user=:user and selected=:selected", SubscribeNewsSource.class);
 		query.setParameter("user", user);
 		query.setParameter("source", source);
+		query.setParameter("selected", false);
 		sn = query.getSingleResult();
 		sn.setSelected(true);
-		em.persist(sn);
+		em.merge(sn);
 		em.flush();
 	}
 
 	@Override
 	public void unselectNewsSource(User user, NewsSource source) {
 		SubscribeNewsSource sn = new SubscribeNewsSource();
-		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM SubscribeNewsSource SN where source=:source and user=:user", SubscribeNewsSource.class);
+		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM SubscribeNewsSource SN where source=:source and user=:user and selected=:selected",  SubscribeNewsSource.class);
 		query.setParameter("user", user);
 		query.setParameter("source", source);
+		query.setParameter("selected", true);
+
 		sn = query.getSingleResult();
 		sn.setSelected(false);
 		em.persist(sn);
@@ -73,16 +84,16 @@ public class ServiceNewsSource implements NewsSourceRemote {
 	public void addNewsSource(NewsSource ns) {
 		em.merge(ns);
 	}
-	
-	@Override
-	public void deleteNewsSource(NewsSource ns)
-	{
-		em.remove(em.contains(ns) ? ns : em.merge(ns));
-	}
 
 	@Override
 	public void updateNewsSource(NewsSource ns) {
 		em.merge(ns);
+	}
+
+	@Override
+	public void deleteNewsSource(NewsSource ns)
+	{
+		em.remove(em.contains(ns) ? ns : em.merge(ns));
 	}
 
 	@Override

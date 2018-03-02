@@ -72,4 +72,11 @@ public class NewsSource implements Serializable {
 		this.subscribeNewsSource = subscribeNewsSource;
 	}
 
+	@Override
+	public String toString() {
+		return "NewsSource [id=" + id + ", url=" + url + ", description=" + description + ", image=" + image + "]";
+	}
+	
+	
+
 }

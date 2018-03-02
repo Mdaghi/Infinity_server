@@ -61,6 +61,13 @@ public class SubscribeNewsSource implements Serializable {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
+
+	@Override
+	public String toString() {
+		return "SubscribeNewsSource [id=" + id + ", source=" + source + ", user=" + user + ", selected=" + selected
+				+ "]";
+	}
+	
 	
 
 }
