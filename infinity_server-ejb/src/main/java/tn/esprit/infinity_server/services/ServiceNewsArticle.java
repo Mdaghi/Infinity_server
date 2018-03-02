@@ -11,11 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import tn.esprit.infinity_server.interfaces.NewsArticleRemote;
 import tn.esprit.infinity_server.persistence.NewsArticle;
 import tn.esprit.infinity_server.persistence.NewsCollection;
@@ -71,21 +66,6 @@ public class ServiceNewsArticle implements NewsArticleRemote {
 		em.flush();
 	}
 	
-    /*static List<NewsArticle> articleRequest(String url) throws UnirestException, MalformedURLException {
-       /* final HttpResponse<String> stringHttpResponse;
-        // This will throw MalformedURLException if the url is malformed.
-        new URL(url);
-        stringHttpResponse = Unirest.get(url).asString();
-        // Check to see if the request was successful; if so, convert the payload JSON into Java objects
-        if (stringHttpResponse.getStatus() == STATUS_OK) {
-            String json = stringHttpResponse.getBody();
-            Gson gson = new Gson();
-            final NewsCollection newsCollection = gson.fromJson(json, NewsCollection.class);
-            return newsCollection.getArticles();
-        }
-		return null;
-    }*/
-
 
 }
 

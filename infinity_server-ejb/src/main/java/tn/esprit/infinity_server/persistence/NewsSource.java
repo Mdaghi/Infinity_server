@@ -24,7 +24,7 @@ public class NewsSource implements Serializable {
 	@Column(name = "IMAGE", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
 	private String image;
 	
-	@OneToMany(mappedBy="source")
+	@OneToMany(mappedBy="source", cascade = CascadeType.ALL)
 	private List<SubscribeNewsSource> subscribeNewsSource;
 
 	
@@ -71,5 +71,12 @@ public class NewsSource implements Serializable {
 	public void setSubscribeNewsSource(List<SubscribeNewsSource> subscribeNewsSource) {
 		this.subscribeNewsSource = subscribeNewsSource;
 	}
+
+	@Override
+	public String toString() {
+		return "NewsSource [id=" + id + ", url=" + url + ", description=" + description + ", image=" + image + "]";
+	}
+	
+	
 
 }
