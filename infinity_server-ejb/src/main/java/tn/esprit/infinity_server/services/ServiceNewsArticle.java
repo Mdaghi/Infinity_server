@@ -1,7 +1,5 @@
 package tn.esprit.infinity_server.services;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import tn.esprit.infinity_server.interfaces.NewsArticleRemote;
 import tn.esprit.infinity_server.persistence.NewsArticle;
-import tn.esprit.infinity_server.persistence.NewsCollection;
-import tn.esprit.infinity_server.persistence.NewsSource;
 import tn.esprit.infinity_server.persistence.SaveArticle;
 import tn.esprit.infinity_server.persistence.User;
 

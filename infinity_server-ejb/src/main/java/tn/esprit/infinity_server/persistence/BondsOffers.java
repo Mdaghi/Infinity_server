@@ -49,6 +49,10 @@ public class BondsOffers implements Serializable {
 	private String interestRate;
 	@ManyToOne
 	private Trader trader;
+	
+	public BondsOffers(){
+		
+	}
 
 	public int getId() {
 		return id;
@@ -138,8 +142,15 @@ public class BondsOffers implements Serializable {
 	public void setInterestRate(String interestRate) {
 		this.interestRate = interestRate;
 	}
-	public void setTrador(Trader trader) {
+	
+
+	public Trader getTrader() {
+		return trader;
+	}
+
+	public void setTrader(Trader trader) {
 		this.trader = trader;
 	}
 
+	
 }
