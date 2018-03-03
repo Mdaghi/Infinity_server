@@ -2,6 +2,7 @@ package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name="bondsoffers")
@@ -49,6 +51,13 @@ public class BondsOffers implements Serializable {
 	private String interestRate;
 	@ManyToOne
 	private Trader trader;
+	
+	@OneToMany(mappedBy="bond")
+	private List<WatchListBonds> watchlistBonds;
+	
+	public BondsOffers(){
+		
+	}
 
 	public int getId() {
 		return id;
@@ -138,8 +147,27 @@ public class BondsOffers implements Serializable {
 	public void setInterestRate(String interestRate) {
 		this.interestRate = interestRate;
 	}
-	public void setTrador(Trader trader) {
-		this.trader = trader;
+	
+
+	public Trader getTrader() {
+		return trader;
 	}
 
+	public void setTrader(Trader trader) {
+		this.trader = trader;
+	}
+	///////WatchList//////////////
+
+
+	public List<WatchListBonds> getWatchlistBonds() {
+		return watchlistBonds;
+	}
+
+	public void setWatchlistBonds(List<WatchListBonds> watchlistBonds) {
+		this.watchlistBonds = watchlistBonds;
+	}
+
+	
+
+	
 }

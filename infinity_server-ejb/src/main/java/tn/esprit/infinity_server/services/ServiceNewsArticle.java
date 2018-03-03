@@ -1,7 +1,5 @@
 package tn.esprit.infinity_server.services;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +11,6 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.infinity_server.interfaces.NewsArticleRemote;
 import tn.esprit.infinity_server.persistence.NewsArticle;
-import tn.esprit.infinity_server.persistence.NewsCollection;
-import tn.esprit.infinity_server.persistence.NewsSource;
 import tn.esprit.infinity_server.persistence.SaveArticle;
 import tn.esprit.infinity_server.persistence.User;
 

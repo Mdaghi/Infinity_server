@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.infinity_server.interfaces.TradorLocal;
 import tn.esprit.infinity_server.interfaces.TradorRemote;
-import tn.esprit.infinity_server.persistence.Client;
+import tn.esprit.infinity_server.persistence.Trader;
 
 /**
  * Session Bean implementation class ServiceTrador
@@ -26,8 +26,8 @@ public class ServiceTrador implements TradorRemote, TradorLocal {
         // TODO Auto-generated constructor stub
     }
 	@Override
-	public void CreateTrader(Client c) {
-		em.persist(c);
+	public void CreateTrader(Trader trader) {
+		em.persist(trader);
 	}
 
 }

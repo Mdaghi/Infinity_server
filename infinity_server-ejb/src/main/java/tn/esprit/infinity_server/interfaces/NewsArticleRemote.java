@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.util.List;
 import javax.ejb.Remote;
 import tn.esprit.infinity_server.persistence.NewsArticle;
-import tn.esprit.infinity_server.persistence.NewsSource;
 import tn.esprit.infinity_server.persistence.User;
 
 @Remote
