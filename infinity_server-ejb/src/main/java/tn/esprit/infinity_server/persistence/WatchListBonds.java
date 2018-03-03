@@ -16,7 +16,7 @@ public class WatchListBonds implements Serializable{
 	private WatchListBondsPk watchlistBondPk;
 	@ManyToOne
 	@JoinColumn(name="IDBOND",referencedColumnName="id",insertable=false,updatable=false)
-	private Bond bond;
+	private BondsOffers bond;
 	@ManyToOne
 	@JoinColumn(name="IDWATCHLIST",referencedColumnName="ID",insertable=false,updatable=false)
 	private WatchList watchList;
@@ -25,11 +25,11 @@ public class WatchListBonds implements Serializable{
 		return watchlistBondPk;
 	}
 
-	public Bond getBond() {
+	public BondsOffers getBond() {
 		return bond;
 	}
 
-	public void setBond(Bond bond) {
+	public void setBond(BondsOffers bond) {
 		this.bond = bond;
 	}
 

@@ -31,12 +31,10 @@ public class WatchList implements Serializable{
 	private Date creationDate;
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String Description;
-	
 	@ManyToOne
 	private Client client;
-	
 	@OneToMany(mappedBy="watchList")
-	private List<WatchListBonds> bond;
+	private List<WatchListBonds> watchListbonds;
 
 	public int getId() {
 		return id;

@@ -3,7 +3,7 @@
 	<persistence-unit name="infinity_server-ejb">
 		<jta-data-source>java:/MySqlInfinity</jta-data-source>		
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>
