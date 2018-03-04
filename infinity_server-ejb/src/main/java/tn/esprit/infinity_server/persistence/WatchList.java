@@ -36,6 +36,12 @@ public class WatchList implements Serializable{
 	@OneToMany(mappedBy="watchList")
 	private List<WatchListBonds> watchListbonds;
 
+	
+	public WatchList() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}
