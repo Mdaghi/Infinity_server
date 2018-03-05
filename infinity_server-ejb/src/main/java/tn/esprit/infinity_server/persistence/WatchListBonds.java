@@ -24,7 +24,10 @@ public class WatchListBonds implements Serializable{
 	public WatchListBondsPk getWatchlistBondPk() {
 		return watchlistBondPk;
 	}
-
+	public void setWatchlistBondPk(WatchListBondsPk watchlistBondPk) {
+		this.watchlistBondPk = watchlistBondPk;
+	}
+	
 	public BondsOffers getBond() {
 		return bond;
 	}
@@ -40,6 +43,7 @@ public class WatchListBonds implements Serializable{
 	public void setWatchList(WatchList watchList) {
 		this.watchList = watchList;
 	}
+
 	
 	
 	

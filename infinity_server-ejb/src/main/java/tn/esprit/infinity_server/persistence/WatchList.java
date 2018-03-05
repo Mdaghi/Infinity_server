@@ -81,5 +81,11 @@ public class WatchList implements Serializable{
 	public void setDescription(String description) {
 		Description = description;
 	}
+
+	@Override
+	public String toString() {
+		return "WatchList [id=" + id + ", name=" + name + ", creationDate=" + creationDate + ", Description="
+				+ "Description ]";
+	}
 	
 }

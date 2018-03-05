@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import tn.esprit.infinity_server.interfaces.WatchListRemote;
 import tn.esprit.infinity_server.persistence.WatchList;
@@ -20,17 +21,16 @@ public class WatchListService implements WatchListRemote{
 
 	@Override
 	public List<WatchList> readAllWatchlistsUser() {
+		return em.createQuery("from WatchList", WatchList.class).getResultList();
 		
-		return null;
 	}
 
 	@Override
 	public void updateWatchList(WatchList watchlist) {
- 		Query query=em.createQuery("Update WatchList set name=:name,description=:description");
+ 		Query query=em.createQuery("Update WatchList w set name=:name,description=:description where w.id=:id");
 		query.setParameter("name",watchlist.getName());
 		query.setParameter("description",watchlist.getDescription());
-		//query.setParameter("id", watchlist.getId());
-
+		query.setParameter("id",watchlist.getId());
 		query.executeUpdate();		
 	}
 
