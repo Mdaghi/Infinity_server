@@ -52,7 +52,7 @@ public class User implements Serializable {
 
 	// activate
 	@Column(name = "activate", nullable = true)
-	private boolean activate;
+	private int activate;
 
 	// code
 	@Column(name = "code", nullable = true, length = 50)
@@ -67,7 +67,7 @@ public class User implements Serializable {
 	private String email;
 
 	// address
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -124,14 +124,6 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public boolean isActivate() {
-		return activate;
-	}
-
-	public void setActivate(boolean activate) {
-		this.activate = activate;
-	}
-
 	public String getCode() {
 		return code;
 	}
@@ -154,6 +146,14 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getActivate() {
+		return activate;
+	}
+
+	public void setActivate(int activate) {
+		this.activate = activate;
 	}
 
 	@Override

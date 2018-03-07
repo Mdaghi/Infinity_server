@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.infinity_server.interfaces.AdmininstratorLocal;
 import tn.esprit.infinity_server.interfaces.AdmininstratorRemote;
+import tn.esprit.infinity_server.persistence.Administrator;
 
 
 /**
@@ -24,6 +25,12 @@ public class AdmininstratorService implements AdmininstratorRemote, Admininstrat
 	
 	public AdmininstratorService() {
 		
+		
+	}
+
+	@Override
+	public void CreateAdmin(Administrator admin) {
+		em.persist(admin);
 		
 	}
 

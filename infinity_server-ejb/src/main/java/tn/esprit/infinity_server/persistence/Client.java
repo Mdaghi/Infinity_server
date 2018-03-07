@@ -79,10 +79,25 @@ public class Client extends User implements Serializable {
 	public void setDemandeBonds(List<DemandeBond> demandeBonds) {
 		this.demandeBonds = demandeBonds;
 	}
+	
+	@OneToMany(mappedBy="client",cascade={CascadeType.ALL})
+	private List<WatchList> watchList;
 
 	@Override
 	public String toString() {
 		return "Client [lastConnection=" + lastConnection + ", isBanned=" + isBanned + "]";
+	}
+
+	public List<WatchList> getWatchList() {
+		return watchList;
+	}
+
+	public void setWatchList(List<WatchList> watchList) {
+		this.watchList = watchList;
+	}
+
+	public void setTrader(Trader trader) {
+		this.trader = trader;
 	}
 
 	
