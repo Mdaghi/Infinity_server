@@ -79,6 +79,13 @@ public class Client extends User implements Serializable {
 	public void setDemandeBonds(List<DemandeBond> demandeBonds) {
 		this.demandeBonds = demandeBonds;
 	}
+
+	@Override
+	public String toString() {
+		return "Client [lastConnection=" + lastConnection + ", isBanned=" + isBanned + "]";
+	}
+
+	
 	
 	
 
