@@ -70,11 +70,11 @@ public class User implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private Set<SaveArticle> saveArticles;
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private Set<SubscribeNewsSource> subscribeNewsSource;
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<SaveArticle> saveArticles;
+	
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<SubscribeNewsSource> subscribeNewsSource;
 
 	public Address getAddress() {
 		return address;
@@ -166,20 +166,22 @@ public class User implements Serializable {
 		 return Res;
 	}
 
-	public Set<SaveArticle> getSaveArticles() {
+	public List<SaveArticle> getSaveArticles() {
 		return saveArticles;
 	}
 
-	public void setSaveArticles(Set<SaveArticle> saveArticles) {
+	public void setSaveArticles(List<SaveArticle> saveArticles) {
 		this.saveArticles = saveArticles;
 	}
 
-	public Set<SubscribeNewsSource> getSubscribeNewsSource() {
+	
+	public List<SubscribeNewsSource> getSubscribeNewsSource() {
 		return subscribeNewsSource;
 	}
 
-	public void setSubscribeNewsSource(Set<SubscribeNewsSource> subscribeNewsSource) {
+	public void setSubscribeNewsSource(List<SubscribeNewsSource> subscribeNewsSource) {
 		this.subscribeNewsSource = subscribeNewsSource;
 	}
+
 
 }
