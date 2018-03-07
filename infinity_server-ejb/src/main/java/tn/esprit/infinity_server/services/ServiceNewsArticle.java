@@ -1,5 +1,8 @@
 package tn.esprit.infinity_server.services;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,8 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.infinity_server.interfaces.NewsArticleRemote;
 import tn.esprit.infinity_server.persistence.NewsArticle;
+import tn.esprit.infinity_server.persistence.NewsCollection;
+import tn.esprit.infinity_server.persistence.NewsSource;
 import tn.esprit.infinity_server.persistence.SaveArticle;
 import tn.esprit.infinity_server.persistence.User;
 
@@ -20,6 +25,16 @@ public class ServiceNewsArticle implements NewsArticleRemote {
 	
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
+	
+	@Override
+	public void addArticle(NewsArticle a)
+	{
+		em.persist(a);
+	}
+	public void deleteArticle(NewsArticle a)
+	{
+		em.remove(a);
+	}
 
 	@Override
 	public List<NewsArticle> getAllArticles() {
@@ -49,8 +64,8 @@ public class ServiceNewsArticle implements NewsArticleRemote {
 		SaveArticle sa = new SaveArticle();
 		sa.setArticle(article);
 		sa.setUser(user);
-		em.persist(sa);
-		em.flush();
+		sa.setDate(LocalDateTime.now());
+		em.merge(sa);
 	}
 
 	@Override
@@ -59,7 +74,6 @@ public class ServiceNewsArticle implements NewsArticleRemote {
 		sa.setArticle(article);
 		sa.setUser(user);
 		em.remove(sa);
-		em.flush();
 	}
 	
 
