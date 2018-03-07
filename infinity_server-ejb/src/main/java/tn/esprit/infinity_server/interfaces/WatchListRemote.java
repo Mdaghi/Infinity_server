@@ -8,10 +8,10 @@ import tn.esprit.infinity_server.persistence.WatchList;
 
 @Remote
 public interface WatchListRemote {
-	public void createWatchList(WatchList watchlist);
-	public List<WatchList> readAllWatchlistsUser();
+	public void createWatchList(WatchList watchlist,int idClient);
+	public List<WatchList> readAllWatchlistsUser(int idClient);
 	public void updateWatchList(WatchList watchlist);
 	public void deleteWatchList(int id);
-	public WatchList searchWatchList(WatchList watchlist);
+	public List<WatchList> searchWatchList(String watchlist,int idClient);
 
 }

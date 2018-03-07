@@ -9,20 +9,26 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.infinity_server.interfaces.WatchListRemote;
+import tn.esprit.infinity_server.persistence.Client;
 import tn.esprit.infinity_server.persistence.WatchList;
 @Stateless
 public class WatchListService implements WatchListRemote{
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;	
 	@Override
-	public void createWatchList(WatchList watchlist) {
+	public void createWatchList(WatchList watchlist,int idClient) {
+		Client client=em.find(Client.class, idClient);
+		System.out.println(client);
+		watchlist.setClient(client);
 		em.persist(watchlist);
 	}
 
 	@Override
-	public List<WatchList> readAllWatchlistsUser() {
-		return em.createQuery("from WatchList", WatchList.class).getResultList();
-		
+	public List<WatchList> readAllWatchlistsUser(int idClient) {
+		Query query= em.createQuery("from WatchList where client_id=:idClient", WatchList.class);
+			query.setParameter("idClient",idClient);
+			return query.getResultList();
+
 	}
 
 	@Override
@@ -41,9 +47,12 @@ public class WatchListService implements WatchListRemote{
 	}
 
 	@Override
-	public WatchList searchWatchList(WatchList watchlist) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<WatchList> searchWatchList(String watchlist,int idClient) {
+		Query query=em.createQuery("from WatchList where client_id=:idClient and (NAME like name or DESCRIPTION like description)");
+		query.setParameter("idClient",idClient);
+		query.setParameter("name",watchlist);
+		query.setParameter("description",watchlist);
+		return query.getResultList();
 	}
 
 }

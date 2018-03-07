@@ -85,7 +85,7 @@ public class WatchList implements Serializable{
 	@Override
 	public String toString() {
 		return "WatchList [id=" + id + ", name=" + name + ", creationDate=" + creationDate + ", Description="
-				+ "Description ]";
+				+ Description +"]";
 	}
 	
 }
