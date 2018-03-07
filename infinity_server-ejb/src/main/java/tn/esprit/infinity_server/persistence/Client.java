@@ -33,10 +33,6 @@ public class Client extends User implements Serializable {
 	@OneToMany
 	private List<DemandeBond> demandeBonds;
 	
-	//WatchList
-	@OneToMany(mappedBy="client")
-	private List<WatchList> watchList;
-	
 
 	public List<CurrencyAccount> getCurrencies() {
 		return currencies;
@@ -84,13 +80,12 @@ public class Client extends User implements Serializable {
 		this.demandeBonds = demandeBonds;
 	}
 
-	public List<WatchList> getWatchList() {
-		return watchList;
+	@Override
+	public String toString() {
+		return "Client [lastConnection=" + lastConnection + ", isBanned=" + isBanned + "]";
 	}
 
-	public void setWatchList(List<WatchList> watchList) {
-		this.watchList = watchList;
-	}
+	
 	
 	
 
