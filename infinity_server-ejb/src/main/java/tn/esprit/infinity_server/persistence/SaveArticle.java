@@ -23,7 +23,7 @@ public class SaveArticle implements Serializable {
 	@JoinColumn(name = "ID_USER", referencedColumnName = "ID")
 	private User user;
 	
-	@Column(name = "DATE", unique = false, nullable = false, insertable = true, updatable = true)
+	@Column(name = "DATE", unique = false, nullable = true, insertable = false, updatable = false)
 	private LocalDateTime date;
 	
 
@@ -54,10 +54,10 @@ public class SaveArticle implements Serializable {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+	
 	@Override
 	public String toString() {
 		return "SaveArticle [id=" + id + ", article=" + article + ", user=" + user + ", date=" + date + "]";
 	}
-
 	
 }
