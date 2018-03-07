@@ -3,15 +3,21 @@ package tn.esprit.infinity_server.persistence;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 @Embeddable
 public class WatchListBondsPk implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private int idBond;
 	private int idWatchlist;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "followSince")	
 	private Date followSince;
 	public int getIdBond() {
 		return idBond;

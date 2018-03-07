@@ -11,7 +11,7 @@ public interface WatchListRemote {
 	public void createWatchList(WatchList watchlist);
 	public List<WatchList> readAllWatchlistsUser();
 	public void updateWatchList(WatchList watchlist);
-	public void deleteWatchList(WatchList watchlist);
+	public void deleteWatchList(int id);
 	public WatchList searchWatchList(WatchList watchlist);
 
 }
