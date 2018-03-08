@@ -25,7 +25,7 @@ public class Trader extends User implements Serializable {
 	@OneToMany(mappedBy = "trader")
 	private List<Client> clients;
 
-	@OneToMany(mappedBy = "trader")
+	@OneToMany(mappedBy = "trader" , cascade={CascadeType.ALL})
 	private List<BondsOffers> bondsoffers ;
 	
 	public int getGrade() {

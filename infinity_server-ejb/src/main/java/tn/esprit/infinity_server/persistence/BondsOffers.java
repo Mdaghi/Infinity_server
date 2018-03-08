@@ -1,6 +1,7 @@
 package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,19 +33,19 @@ public class BondsOffers implements Serializable {
 	@Column(name = "series", nullable = false)
 	private String series;
 	@Column(name = "issuedate", nullable = false)
-	private Date issueDate;
+	private java.sql.Date issueDate;
 	@Column(name = "address", nullable = false)
 	private String address;
 	@Column(name = "printplace", nullable = false)
 	private String printPlace;
 	@Column(name = "printdate", nullable = false)
-	private Date printDate;
+	private java.sql.Date printDate;
 	@Column(name = "imgpath", nullable = true)
 	private String imgPath;
 	@Column(name = "couponrate", nullable = false)
 	private Float couponRate;
 	@Column(name = "maturitydate", nullable = false)
-	private Date maturityDate;
+	private java.sql.Date maturityDate;
 	@Column(name = "frequencyrate", nullable = false)
 	private String frequencyRate;
 	@Column(name = "interestrate", nullable = false)
@@ -74,7 +75,7 @@ public class BondsOffers implements Serializable {
 	public String getSeries() {
 		return series;
 	}
-	public Date getIssueDate() {
+	public java.sql.Date getIssueDate() {
 		return issueDate;
 	}
 	public String getAddress() {
@@ -83,7 +84,7 @@ public class BondsOffers implements Serializable {
 	public String getPrintPlace() {
 		return printPlace;
 	}
-	public Date getPrintDate() {
+	public java.sql.Date getPrintDate() {
 		return printDate;
 	}
 	public String getImgPath() {
@@ -92,7 +93,7 @@ public class BondsOffers implements Serializable {
 	public Float getCouponRate() {
 		return couponRate;
 	}
-	public Date getMaturityDate() {
+	public java.sql.Date getMaturityDate() {
 		return maturityDate;
 	}
 	public String getFrequencyRate() {
@@ -120,7 +121,7 @@ public class BondsOffers implements Serializable {
 	public void setSeries(String series) {
 		this.series = series;
 	}
-	public void setIssueDate(Date issueDate) {
+	public void setIssueDate(java.sql.Date issueDate) {
 		this.issueDate = issueDate;
 	}
 	public void setAddress(String address) {
@@ -129,7 +130,7 @@ public class BondsOffers implements Serializable {
 	public void setPrintPlace(String printPlace) {
 		this.printPlace = printPlace;
 	}
-	public void setPrintDate(Date printDate) {
+	public void setPrintDate(java.sql.Date printDate) {
 		this.printDate = printDate;
 	}
 	public void setImgPath(String imgPath) {
@@ -138,7 +139,7 @@ public class BondsOffers implements Serializable {
 	public void setCouponRate(Float couponRate) {
 		this.couponRate = couponRate;
 	}
-	public void setMaturityDate(Date maturityDate) {
+	public void setMaturityDate(java.sql.Date maturityDate) {
 		this.maturityDate = maturityDate;
 	}
 	public void setFrequencyRate(String frequencyRate) {
