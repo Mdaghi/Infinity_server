@@ -1,18 +1,19 @@
-package tn.esprit.infinity_server.persistence;
+    package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Embeddable
 public class CommentPk implements Serializable {
 	@Column(name = "idBondOffer", nullable = true)
-	private int idBondOffer;
+	private Integer idBondOffer;
 	@Column(name = "idClient", nullable = true)
-	private int idClient;
+	private Integer idClient;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "commentDate", nullable = true)	
 	private Date commentDate;
@@ -21,18 +22,29 @@ public class CommentPk implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public int getIdClient() {
+	
+	
+	public CommentPk(Integer idBondOffer, Integer idClient, Date commentDate) {
+		super();
+		this.idBondOffer = -1;
+		this.idClient = -1;
+		this.commentDate = new Date();
+	}
+
+
+
+	public Integer getIdClient() {
 		return idClient;
 	}
 
-	public void setIdClient(int idClient) {
+	public void setIdClient(Integer idClient) {
 		this.idClient = idClient;
 	}
 
-	public int getIdBondOffer() {
+	public Integer getIdBondOffer() {
 		return idBondOffer;
 	}
-	public void setIdBondOffer(int idBondOffer) {
+	public void setIdBondOffer(Integer idBondOffer) {
 		this.idBondOffer = idBondOffer;
 	}
 	
@@ -70,6 +82,12 @@ public class CommentPk implements Serializable {
 		if (idClient != other.idClient)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "CommentPk [idBondOffer=" + idBondOffer + ", idClient=" + idClient + ", commentDate=" + commentDate
+				+ "]";
 	}
 	
 	

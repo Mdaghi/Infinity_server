@@ -1,42 +1,38 @@
 package tn.esprit.infinity_server.persistence;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-@Embeddable
-public class WatchListBondsPk implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private int idBond;
-	private int idWatchlist;
 
+@Embeddable
+public class RatingPk implements Serializable{
+	private int idClient;
+	private int idBond;
+	public RatingPk() {
+		super();
+	}
+	public int getIdClient() {
+		return idClient;
+	}
+	public void setIdClient(int idClient) {
+		this.idClient = idClient;
+	}
 	public int getIdBond() {
 		return idBond;
 	}
 	public void setIdBond(int idBond) {
 		this.idBond = idBond;
 	}
-	public int getIdWatchlist() {
-		return idWatchlist;
+	@Override
+	public String toString() {
+		return "RatingPk [idClient=" + idClient + ", idBond=" + idBond + "]";
 	}
-	public void setIdWatchlist(int idWatchlist) {
-		this.idWatchlist = idWatchlist;
-	}
-	/**********HashSetAnd Equal*********/
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + idBond;
-		result = prime * result + idWatchlist;
+		result = prime * result + idClient;
 		return result;
 	}
 	@Override
@@ -47,16 +43,13 @@ public class WatchListBondsPk implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		WatchListBondsPk other = (WatchListBondsPk) obj;
+		RatingPk other = (RatingPk) obj;
 		if (idBond != other.idBond)
 			return false;
-		if (idWatchlist != other.idWatchlist)
+		if (idClient != other.idClient)
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 	
 	

@@ -12,7 +12,7 @@ import tn.esprit.infinity_server.persistence.User;
  *
  */
 @Entity
-
+@DiscriminatorValue(value="Client")
 public class Client extends User implements Serializable {
 
 	// lastConnection
@@ -82,6 +82,12 @@ public class Client extends User implements Serializable {
 	
 	@OneToMany(mappedBy="client",cascade={CascadeType.ALL})
 	private List<WatchList> watchList;
+	
+	@OneToMany(mappedBy="client",cascade={CascadeType.ALL})
+	private List<Likes> likes;
+	@OneToMany(mappedBy="client",cascade={CascadeType.ALL})
+	private List<Rating> ratings;
+
 
 	@Override
 	public String toString() {
@@ -95,11 +101,27 @@ public class Client extends User implements Serializable {
 	public void setWatchList(List<WatchList> watchList) {
 		this.watchList = watchList;
 	}
+	
+	public List<Likes> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<Likes> likes) {
+		this.likes = likes;
+	}
 
 	public void setTrader(Trader trader) {
 		this.trader = trader;
 	}
 
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+	
 	
 	
 	

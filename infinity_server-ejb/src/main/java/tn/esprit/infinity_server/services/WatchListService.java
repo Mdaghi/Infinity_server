@@ -18,7 +18,6 @@ public class WatchListService implements WatchListRemote{
 	@Override
 	public void createWatchList(WatchList watchlist,int idClient) {
 		Client client=em.find(Client.class, idClient);
-		System.out.println(client);
 		watchlist.setClient(client);
 		em.persist(watchlist);
 	}
@@ -48,8 +47,7 @@ public class WatchListService implements WatchListRemote{
 
 	@Override
 	public List<WatchList> searchWatchList(String watchlist,int idClient) {
-		Query query=em.createQuery("from WatchList where client_id=:idClient and (NAME like name or DESCRIPTION like description)");
-		query.setParameter("idClient",idClient);
+		Query query=em.createQuery("select b from WatchList b where b.name like :name or b.Description like :description");
 		query.setParameter("name",watchlist);
 		query.setParameter("description",watchlist);
 		return query.getResultList();

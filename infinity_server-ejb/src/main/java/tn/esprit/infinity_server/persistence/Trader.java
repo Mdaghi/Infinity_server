@@ -11,16 +11,17 @@ import tn.esprit.infinity_server.persistence.User;
  *
  */
 @Entity
+@DiscriminatorValue("Trader")
 public class Trader extends User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	// role
 	@Column(name = "grade")
-	private int grade;
+	private Integer grade;
 	// experience Year
 	@Column(name = "experienceYear")
-	private int experienceYear;
+	private Integer experienceYear;
 
 	@OneToMany(mappedBy = "trader")
 	private List<Client> clients;
@@ -28,19 +29,19 @@ public class Trader extends User implements Serializable {
 	@OneToMany(mappedBy = "trader")
 	private List<BondsOffers> bondsoffers ;
 	
-	public int getGrade() {
+	public Integer getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
+	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
 
-	public int getExperienceYear() {
+	public Integer getExperienceYear() {
 		return experienceYear;
 	}
 
-	public void setExperienceYear(int experienceYear) {
+	public void setExperienceYear(Integer experienceYear) {
 		this.experienceYear = experienceYear;
 	}
 

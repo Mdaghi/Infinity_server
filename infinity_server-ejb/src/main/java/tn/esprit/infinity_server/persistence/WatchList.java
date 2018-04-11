@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,9 +38,22 @@ public class WatchList implements Serializable{
 	private List<WatchListBonds> watchListbonds;
 
 	
+	public List<WatchListBonds> getWatchListbonds() {
+		return watchListbonds;
+	}
+
+	public void setWatchListbonds(List<WatchListBonds> watchListbonds) {
+		this.watchListbonds = watchListbonds;
+	}
+
 	public WatchList() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public WatchList(int id,String name,Date ceationDate) {
+		this.id=id;
+		this.name=name;
+		this.creationDate=creationDate;
 	}
 
 	public int getId() {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -26,14 +27,30 @@ public class Comment implements Serializable {
 	@JoinColumn(name="idBondOffer",referencedColumnName="id",nullable=true,insertable=false,updatable=false)
 	private BondsOffers bondOffer;
 	@ManyToOne
-	@JoinColumn(name="idCliet",referencedColumnName="id",nullable=true,insertable=false,updatable=false)
+	@JoinColumn(name="idClient",referencedColumnName="id",nullable=true,insertable=false,updatable=false)
 	private Client client;
 	private String message;
 	
 	@ManyToOne
 	private Comment commentParent;
-	@OneToMany(mappedBy="commentParent")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "commentParent", cascade = CascadeType.ALL)
 	private List<Comment> commentsChild;
+	
+	
+	public Comment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Comment(CommentPk commentPk, BondsOffers bondOffer, Client client, String message) {
+		super();
+		
+		CommentPk pk=new CommentPk(0,0,new Date());
+		this.commentPk = commentPk;
+		this.bondOffer = bondOffer;
+		this.client = client;
+		this.message = message;
+		this.commentParent.setCommentPk(pk);
+	}
 	public CommentPk getCommentPk() {
 		return commentPk;
 	}
@@ -75,5 +92,18 @@ public class Comment implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	/*@Override
+	public String toString() {
+		return "Comment [idClient=" + commentPk.getIdClient()+ "idBond=" + commentPk.getIdBondOffer()+"date=" + commentPk.getCommentDate()+ ", message="
+				+ message + "]";
+	}*/
+	@Override
+	public String toString() {
+		return "Comment [idClient=" + commentPk.getIdClient()+ "idBond=" + commentPk.getIdBondOffer()+"date=" + commentPk.getCommentDate()+  ", message="
+				+ message + ", commentParent=" + commentParent + "]";
+	}
+	
+	
+	
+	
 }
