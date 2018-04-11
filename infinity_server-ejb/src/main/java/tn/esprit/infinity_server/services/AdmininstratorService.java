@@ -23,10 +23,6 @@ public class AdmininstratorService implements AdmininstratorRemote, Admininstrat
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
 	
-	public AdmininstratorService() {
-		
-		
-	}
 
 	@Override
 	public void CreateAdmin(Administrator admin) {

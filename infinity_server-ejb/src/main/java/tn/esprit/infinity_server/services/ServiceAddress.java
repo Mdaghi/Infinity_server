@@ -62,6 +62,7 @@ public class ServiceAddress implements AddressRemote, AddressLocal {
 	@Override
 	public List<Address> findAllAddress() {
 		Query query = em.createQuery("SELECT a FROM Address a");
+		@SuppressWarnings("unchecked")
 		List<Address> resultList = (List<Address>) query.getResultList();
 		return resultList;
 	}
