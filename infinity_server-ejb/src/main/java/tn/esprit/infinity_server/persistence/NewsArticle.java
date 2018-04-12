@@ -9,9 +9,6 @@ import javax.persistence.*;
 @Table(name = "NEWS_ARTICLE")
 public class NewsArticle implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +18,10 @@ public class NewsArticle implements Serializable {
 	@Column(name = "AUTHOR", unique = false, nullable = false, insertable = true, updatable = true, length = 100)
 	private String author;
 	
-	@Column(name = "TITLE", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
+	@Column(name = "TITLE", unique = false, nullable = false, insertable = true, updatable = true, length = 500)
 	private String title;
 	
-	@Column(name = "DESCRIPTION", unique = false, nullable = false, insertable = true, updatable = true, length = 80)
+	@Column(name = "DESCRIPTION", unique = false, nullable = false, insertable = true, updatable = true, length = 500)
 	private String description;
 	
 	@Column(name = "URL", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
@@ -36,10 +33,9 @@ public class NewsArticle implements Serializable {
 	@Column(name = "PUBLISH_AT", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
 	private String publishedAt;
 
-	@OneToMany(mappedBy="article", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="article", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<SaveArticle> saveArticles;
 
-	
 	public int getId() {
 		return id;
 	}
@@ -102,8 +98,6 @@ public class NewsArticle implements Serializable {
 		this.publishedAt = publishedAt;
 	}
 
-	
-	
 	public List<SaveArticle> getSaveArticles() {
 		return saveArticles;
 	}

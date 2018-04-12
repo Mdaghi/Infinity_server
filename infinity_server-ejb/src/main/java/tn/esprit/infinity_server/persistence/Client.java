@@ -12,7 +12,7 @@ import tn.esprit.infinity_server.persistence.User;
  *
  */
 @Entity
-
+@DiscriminatorValue(value="Client")
 public class Client extends User implements Serializable {
 
 	// lastConnection
@@ -32,10 +32,6 @@ public class Client extends User implements Serializable {
 	
 	@OneToMany
 	private List<DemandeBond> demandeBonds;
-	
-	//WatchList
-	@OneToMany(mappedBy="client")
-	private List<WatchList> watchList;
 	
 
 	public List<CurrencyAccount> getCurrencies() {
@@ -83,6 +79,20 @@ public class Client extends User implements Serializable {
 	public void setDemandeBonds(List<DemandeBond> demandeBonds) {
 		this.demandeBonds = demandeBonds;
 	}
+	
+	@OneToMany(mappedBy="client",cascade={CascadeType.ALL})
+	private List<WatchList> watchList;
+	
+	@OneToMany(mappedBy="client",cascade={CascadeType.ALL})
+	private List<Likes> likes;
+	@OneToMany(mappedBy="client",cascade={CascadeType.ALL})
+	private List<Rating> ratings;
+
+
+	@Override
+	public String toString() {
+		return "Client [lastConnection=" + lastConnection + ", isBanned=" + isBanned + "]";
+	}
 
 	public List<WatchList> getWatchList() {
 		return watchList;
@@ -91,6 +101,28 @@ public class Client extends User implements Serializable {
 	public void setWatchList(List<WatchList> watchList) {
 		this.watchList = watchList;
 	}
+	
+	public List<Likes> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<Likes> likes) {
+		this.likes = likes;
+	}
+
+	public void setTrader(Trader trader) {
+		this.trader = trader;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+	
+	
 	
 	
 

@@ -11,9 +11,11 @@ public class NewsSource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
 	private int id;
+	
+	@Column(name = "TITLE", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
+	private String title;
 	
 	@Column(name = "URL", unique = false, nullable = false, insertable = true, updatable = true, length = 250)
 	private String url;
@@ -35,8 +37,15 @@ public class NewsSource implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getUrl() {
 		return url;
 	}
@@ -76,7 +85,27 @@ public class NewsSource implements Serializable {
 	public String toString() {
 		return "NewsSource [id=" + id + ", url=" + url + ", description=" + description + ", image=" + image + "]";
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NewsSource other = (NewsSource) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 }

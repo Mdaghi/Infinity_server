@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.infinity_server.interfaces.AdmininstratorLocal;
 import tn.esprit.infinity_server.interfaces.AdmininstratorRemote;
+import tn.esprit.infinity_server.persistence.Administrator;
 
 
 /**
@@ -22,8 +23,10 @@ public class AdmininstratorService implements AdmininstratorRemote, Admininstrat
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
 	
-	public AdmininstratorService() {
-		
+
+	@Override
+	public void CreateAdmin(Administrator admin) {
+		em.persist(admin);
 		
 	}
 

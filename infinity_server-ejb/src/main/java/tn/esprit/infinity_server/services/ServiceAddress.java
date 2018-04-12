@@ -22,27 +22,27 @@ public class ServiceAddress implements AddressRemote, AddressLocal {
 
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
-    /**
-     * Default constructor. 
-     */
-  
+
+	/**
+	 * Default constructor.
+	 */
 
 	@Override
 	public void CreateAddress(Address a) {
 		em.persist(a);
-		
+
 	}
 
 	@Override
 	public void UpdateAddress(Address a) {
-		em.refresh(a);
-		
+		em.merge(a);
+
 	}
 
 	@Override
 	public void RemoveAddress(Address a) {
 		em.remove(a);
-		
+
 	}
 
 	@Override
@@ -54,8 +54,7 @@ public class ServiceAddress implements AddressRemote, AddressLocal {
 		try {
 			found = query.getSingleResult();
 		} catch (Exception ex) {
-			Logger.getLogger(UserService.class.getName()).log(Level.WARNING,
-					"no such login=" + id);
+			Logger.getLogger(UserService.class.getName()).log(Level.WARNING, "no such login=" + id);
 		}
 		return found;
 	}
@@ -63,9 +62,27 @@ public class ServiceAddress implements AddressRemote, AddressLocal {
 	@Override
 	public List<Address> findAllAddress() {
 		Query query = em.createQuery("SELECT a FROM Address a");
-	    List<Address> resultList = (List<Address>)query.getResultList();
+		@SuppressWarnings("unchecked")
+		List<Address> resultList = (List<Address>) query.getResultList();
 		return resultList;
 	}
-	
+
+	public void UpdateAddressByid(Address address) {
+		String jpql = "update a from Address set a.street=:street " + " a.country =:country  "
+				+ " a.number =:number  " + " a.city =:city  " + " a.postalCode =:postalCode  " + "where a.id=:id";
+		Query query = em.createQuery(jpql, Address.class);
+		query.setParameter("street", address.getId());
+		query.setParameter("country", address.getId());
+		query.setParameter("number", address.getId());
+		query.setParameter("city", address.getId());
+		query.setParameter("postalCode", address.getId());
+		query.setParameter("id", address.getId());
+		int modif = query.executeUpdate();
+		if (modif == 1)
+			System.out.println("modification ok ");
+		else
+			System.out.println("modification non ");
+
+	}
 
 }

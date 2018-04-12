@@ -61,6 +61,11 @@ public class BondsOffers implements Serializable {
 	@OneToMany(mappedBy="bondsOffers")
 	private List<Affectation> affectation;
 	
+	@OneToMany(mappedBy="bond")
+	private List<Likes> likes;	
+	@OneToMany(mappedBy="bond")
+	private List<Rating> ratings;
+	
 	public BondsOffers(){
 		
 	}
@@ -173,6 +178,7 @@ public class BondsOffers implements Serializable {
 		this.watchlistBonds = watchlistBonds;
 	}
 
+
 	public String getStatusOffer() {
 		return statusOffer;
 	}
@@ -190,6 +196,16 @@ public class BondsOffers implements Serializable {
 	}
 
 	
+
+	public List<Likes> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<Likes> likes) {
+		this.likes = likes;
+	}
+
+
 
 	
 }

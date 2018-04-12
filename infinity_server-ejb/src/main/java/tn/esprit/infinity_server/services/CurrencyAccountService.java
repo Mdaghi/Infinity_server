@@ -16,8 +16,6 @@ public class CurrencyAccountService implements CurrencyAccountRemote, CurrencyAc
     /**
      * Default constructor. 
      */
-    public CurrencyAccountService() {
-        // TODO Auto-generated constructor stub
-    }
+   
 
 }

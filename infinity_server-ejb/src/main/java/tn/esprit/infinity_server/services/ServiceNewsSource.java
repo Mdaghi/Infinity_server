@@ -30,11 +30,15 @@ public class ServiceNewsSource implements NewsSourceRemote {
 	}
 
 	@Override
-	public List<SubscribeNewsSource> getSubscribedNewsSource(User user) {
+	public List<NewsSource> getSubscribedNewsSource(User user) {
 		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM " + SubscribeNewsSource.class.getName() + " SN where user=:user",SubscribeNewsSource.class);
 		query.setParameter("user", user);
 		List<SubscribeNewsSource> list = query.getResultList();
-		return list;
+		List<NewsSource> listNewsSource = new ArrayList<>();
+		list.forEach(sc -> {
+			listNewsSource.add(sc.getSource());
+		});
+		return listNewsSource;
 	}
 
 	@Override
@@ -42,11 +46,29 @@ public class ServiceNewsSource implements NewsSourceRemote {
 		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM " + SubscribeNewsSource.class.getName() + " SN where user=:user and selected=:selected",SubscribeNewsSource.class);
 		query.setParameter("user", user);
 		query.setParameter("selected", true);
+		try
+		{
 		return query.getSingleResult();
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 
 	@Override
 	public void selectNewsSource(User user, NewsSource source) {
+		SubscribeNewsSource snSelected;
+		try
+		{
+		snSelected = getSelecteddNewsSource(user);
+		snSelected.setSelected(false);
+		em.merge(snSelected);
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("None selected");
+		}
 		SubscribeNewsSource sn = new SubscribeNewsSource();
 		TypedQuery<SubscribeNewsSource> query = em.createQuery("SELECT SN FROM SubscribeNewsSource SN where source=:source and user=:user and selected=:selected", SubscribeNewsSource.class);
 		query.setParameter("user", user);
@@ -80,6 +102,14 @@ public class ServiceNewsSource implements NewsSourceRemote {
 		em.merge(sns);	
 	}
 	
+	@Override
+	public void userUnSubscribeNewsSource(User user, NewsSource source) {
+		SubscribeNewsSource sns = new SubscribeNewsSource();
+		sns.setSource(source);
+		sns.setUser(user);
+		em.remove(sns);	
+	}
+
 	@Override
 	public void addNewsSource(NewsSource ns) {
 		em.merge(ns);

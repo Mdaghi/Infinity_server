@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,8 +22,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
+@DiscriminatorValue("User")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type")
+@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public class User implements Serializable {
 
 	/**
@@ -52,7 +55,7 @@ public class User implements Serializable {
 
 	// activate
 	@Column(name = "activate", nullable = true)
-	private boolean activate;
+	private int activate;
 
 	// code
 	@Column(name = "code", nullable = true, length = 50)
@@ -67,14 +70,14 @@ public class User implements Serializable {
 	private String email;
 
 	// address
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private Set<SaveArticle> saveArticles;
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private Set<SubscribeNewsSource> subscribeNewsSource;
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<SaveArticle> saveArticles;
+	
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<SubscribeNewsSource> subscribeNewsSource;
 
 	public Address getAddress() {
 		return address;
@@ -124,14 +127,6 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public boolean isActivate() {
-		return activate;
-	}
-
-	public void setActivate(boolean activate) {
-		this.activate = activate;
-	}
-
 	public String getCode() {
 		return code;
 	}
@@ -156,6 +151,14 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	public int getActivate() {
+		return activate;
+	}
+
+	public void setActivate(int activate) {
+		this.activate = activate;
+	}
+
 	@Override
 	public String toString() {
 		String Res ="";
@@ -166,20 +169,22 @@ public class User implements Serializable {
 		 return Res;
 	}
 
-	public Set<SaveArticle> getSaveArticles() {
+	public List<SaveArticle> getSaveArticles() {
 		return saveArticles;
 	}
 
-	public void setSaveArticles(Set<SaveArticle> saveArticles) {
+	public void setSaveArticles(List<SaveArticle> saveArticles) {
 		this.saveArticles = saveArticles;
 	}
 
-	public Set<SubscribeNewsSource> getSubscribeNewsSource() {
+	
+	public List<SubscribeNewsSource> getSubscribeNewsSource() {
 		return subscribeNewsSource;
 	}
 
-	public void setSubscribeNewsSource(Set<SubscribeNewsSource> subscribeNewsSource) {
+	public void setSubscribeNewsSource(List<SubscribeNewsSource> subscribeNewsSource) {
 		this.subscribeNewsSource = subscribeNewsSource;
 	}
+
 
 }

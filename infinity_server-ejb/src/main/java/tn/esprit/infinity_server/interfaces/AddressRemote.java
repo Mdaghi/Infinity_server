@@ -13,5 +13,6 @@ public interface AddressRemote {
 	public void RemoveAddress(Address a);
 	Address findAddressById(Integer id);
 	List<Address> findAllAddress();
+	public void UpdateAddressByid(Address address);
 
 }
