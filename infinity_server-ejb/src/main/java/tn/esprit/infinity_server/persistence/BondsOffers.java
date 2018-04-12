@@ -40,6 +40,8 @@ public class BondsOffers implements Serializable {
 	private String printPlace;
 	@Column(name = "printdate", nullable = false)
 	private java.sql.Date printDate;
+	@Column(name = "statusoffer", nullable = true)
+	private String statusOffer;
 	@Column(name = "imgpath", nullable = true)
 	private String imgPath;
 	@Column(name = "couponrate", nullable = false)
@@ -55,6 +57,9 @@ public class BondsOffers implements Serializable {
 	
 	@OneToMany(mappedBy="bond")
 	private List<WatchListBonds> watchlistBonds;
+
+	@OneToMany(mappedBy="bondsOffers")
+	private List<Affectation> affectation;
 	
 	public BondsOffers(){
 		
@@ -166,6 +171,22 @@ public class BondsOffers implements Serializable {
 
 	public void setWatchlistBonds(List<WatchListBonds> watchlistBonds) {
 		this.watchlistBonds = watchlistBonds;
+	}
+
+	public String getStatusOffer() {
+		return statusOffer;
+	}
+
+	public void setStatusOffer(String statusOffer) {
+		this.statusOffer = statusOffer;
+	}
+
+	public List<Affectation> getAffectation() {
+		return affectation;
+	}
+
+	public void setAffectation(List<Affectation> affectation) {
+		this.affectation = affectation;
 	}
 
 	

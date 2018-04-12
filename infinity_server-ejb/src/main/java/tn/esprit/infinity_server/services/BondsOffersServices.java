@@ -1,5 +1,7 @@
 package tn.esprit.infinity_server.services;
 
+import java.math.BigInteger;
+import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -67,6 +69,54 @@ public class BondsOffersServices implements BondsOffers{
 		bondsoffers.setTrader(trader);
 				em.persist(bondsoffers);
 		
+	}
+
+	@Override
+	public Integer totalOfBonds() {
+		Query result=em.createNativeQuery("Select count(*) from bondsOffers");
+		int c = ((BigInteger) result.getSingleResult()).intValue();
+
+		return c;
+	}
+
+	@Override
+	public Float maxCouponRate() {
+		Query result=em.createNativeQuery("select MIN(`couponrate`) FROM bondsoffers");
+		Float c = ((float)result.getSingleResult());
+
+		return c;
+	}
+
+	@Override
+	public Float minCouponRate() {
+		Query result=em.createNativeQuery("select MAX(`couponrate`) FROM bondsoffers");
+		Float c = ((float)result.getSingleResult());
+         
+		return c;
+	}
+
+	@Override
+	public java.sql.Date minIssueDate() {
+		Query result=em.createNativeQuery("select MAX(`issuedate`) FROM bondsoffers");
+		java.sql.Date c = (java.sql.Date) result.getSingleResult();
+		return c;
+	}
+
+	@Override
+	public tn.esprit.infinity_server.persistence.BondsOffers getofferbond(int id1) {
+		return em.find(tn.esprit.infinity_server.persistence.BondsOffers.class, id1);
+	}
+
+	@Override
+	public long getSommePrice3() {
+		Query query=em.createQuery("SELECT SUM(d.denomination) From BondsOffers d where d.statusOffer='affected'");
+		return (long) query.getSingleResult();
+	}
+
+	@Override
+	public long getSommePrice4() {
+		Query query=em.createQuery("SELECT SUM(d.denomination) From BondsOffers d where d.statusOffer='not affected'");
+		return (long) query.getSingleResult();		
 	}
 	
 }

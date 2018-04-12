@@ -13,5 +13,13 @@ public interface BondsOffers {
 	BondsOffers findBondsOfferById(Integer id);
 	List<tn.esprit.infinity_server.persistence.BondsOffers> findAllBondsOffers();
 	List<tn.esprit.infinity_server.persistence.BondsOffers> findBonds(String rech);
+	public tn.esprit.infinity_server.persistence.BondsOffers getofferbond(int id1);
+	public long getSommePrice3();
+	public long getSommePrice4();
+	public Integer totalOfBonds();
+	public Float maxCouponRate();
+	public Float minCouponRate();
+	public java.sql.Date minIssueDate();
+	
 	
 }
