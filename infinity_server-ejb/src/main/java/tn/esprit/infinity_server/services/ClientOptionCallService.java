@@ -17,17 +17,17 @@ import javax.persistence.TypedQuery;
 
 import tn.esprit.infinity_server.persistence.Client;
 import tn.esprit.infinity_server.persistence.OptionCall;
-import tn.esprit.infinity_server.persistence.OptionPut;
-import tn.esprit.infinity_server.persistence.WatchList;
-import tn.esprit.infinity_server.interfaces.OptionRemote;
+
+
+import tn.esprit.infinity_server.interfaces.OptionCallRemote;
 
 @Stateless
-public class ClientOptionService implements OptionRemote{
+public class ClientOptionCallService implements OptionCallRemote{
 
 	@PersistenceContext(unitName="infinity_server-ejb")
 	EntityManager em ;
 	@Override
-	public void createPutOption(OptionPut o,int idClient) {
+	public void createCallOption(OptionCall o,int idClient) {
 		Client client=em.find(Client.class, idClient);
 		o.setSeller(client);
          Long n=CountRow();
@@ -39,13 +39,13 @@ public class ClientOptionService implements OptionRemote{
 	@Override
 	public Long CountRow() {
 		Query queryTotal = em.createQuery
-			    ("Select count(o) from OptionPut o");
+			    ("Select count(o) from OptionCall o");
 			 Long countResult = (long)queryTotal.getSingleResult();
 	return countResult;
 		
 	}
 	@Override
-	public void UpdatePutOption(OptionPut o,int idClient) {
+	public void UpdateCallOption(OptionCall o,int idClient) {
 		Client client=em.find(Client.class, idClient);
 		o.setId_buyer(idClient);
 		em.merge(o);
@@ -53,70 +53,70 @@ public class ClientOptionService implements OptionRemote{
 	}
 	
 	@Override
-	public void UpdatePutOption(OptionPut o,String statut) {
+	public void UpdateCallOption(OptionCall o,String statut) {
 	
-		o.setstatut(statut);
+		o.setStatut(statut);
 		em.merge(o);
 		
 	}
 	@Override
 	public void deleteOption(int IdOption) {
 	
-		em.remove(em.find(OptionPut.class,IdOption));
+		em.remove(em.find(OptionCall.class,IdOption));
 		
 	}
 	
 	@Override
-	public List<OptionPut> ListOptionPut() {
+	public List<OptionCall> ListOptionCall() {
 	
-	return em.createQuery("select o from OptionPut o", OptionPut.class).getResultList();
+	return em.createQuery("select o from OptionCall o", OptionCall.class).getResultList();
 	}
 	@Override
-	public List<OptionPut> StatutListOptionPut(String statut,int idClient) {
+	public List<OptionCall> StatutListOptionCall(String statut,int idClient) {
 		Client seller=em.find(Client.class, idClient);
-		Query query=em.createQuery("SELECT o from OptionPut o WHERE o.statut = :statut and o.seller= :seller", OptionPut.class);
+		Query query=em.createQuery("SELECT o from OptionCall o WHERE o.statut = :statut and o.seller= :seller", OptionCall.class);
 		query.setParameter("statut",statut);
 		query.setParameter("seller",seller);
 		return query.getResultList();
 		
 	}
 	@Override
-	public List<OptionPut> AvailableStatutListOptionPut(String statut,int idClient) {
+	public List<OptionCall> AvailableStatutListOptionCall(String statut,int idClient) {
 		Client seller=em.find(Client.class, idClient);
-		Query query=em.createQuery("SELECT o from OptionPut o WHERE o.statut = :statut and o.seller not like :seller", OptionPut.class);
+		Query query=em.createQuery("SELECT o from OptionCall o WHERE o.statut = :statut and o.seller not like :seller", OptionCall.class);
 		query.setParameter("statut",statut);
 		query.setParameter("seller",seller);
 		return query.getResultList();
 		
 	}
 	@Override
-	public int findOptionPutById(String code) {
-		Query query=em.createQuery("select opt.id from OptionPut opt where opt.code like :c");
+	public int findOptionCallById(String code) {
+		Query query=em.createQuery("select opt.id from OptionCall opt where opt.code like :c");
 		query.setParameter("c",code);
 		return (int) query.getSingleResult();
 		
 	}
 
 	@Override
-	public OptionPut getOptionById(int c) {
-		OptionPut opt=em.find(OptionPut.class,c);
+	public OptionCall getOptionById(int c) {
+		OptionCall opt=em.find(OptionCall.class,c);
 		return opt;
 	}
 
 	
 
 	@Override
-	public void removeOptionPutByCode(String codeOptionPut) {
-	em.remove(em.find(OptionPut.class,codeOptionPut));
+	public void removeOptionCallByCode(String codeOptionCall) {
+	em.remove(em.find(OptionCall.class,codeOptionCall));
 	}
 
 
 	
 	@Override
-	public void updateStatutByID(String statut, int OptionPutId) {
-		Query query = em.createQuery("update OptionPut o set Statut=:statut where o.id=:OptionPutId");
+	public void updateStatutByID(String statut, int OptionCallId) {
+		Query query = em.createQuery("update OptionCall o set Statut=:statut where o.id=:OptionCallId");
 		query.setParameter("statut", statut);
-		query.setParameter("OptionPutId", OptionPutId);
+		query.setParameter("OptionCallId", OptionCallId);
 		int modified = query.executeUpdate();
 		if(modified == 1){
 			System.out.println("successfully updated");
@@ -134,8 +134,8 @@ public class ClientOptionService implements OptionRemote{
 		  double dplus = (Math.log(S / K) + (r - q + Math.pow(vol,2) / 2) * T) / (vol * Math.sqrt(T));
 	      double dminus = dplus - vol * Math.sqrt(T);
 	      double price;
-	     
-	       price = S * -1 * CND(-dplus) * Math.exp(-q * T) + K * CND(-dminus) * Math.exp(-r * T);             // price of a put option
+	      price = S * CND(dplus) * Math.exp(-q * T) - K * CND(dminus) * Math.exp(-r * T); // price of a call option
+	       
 	      return price;
 		
 	}

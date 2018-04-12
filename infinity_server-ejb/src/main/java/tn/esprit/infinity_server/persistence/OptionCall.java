@@ -1,5 +1,4 @@
 package tn.esprit.infinity_server.persistence;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -16,11 +15,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date ;
 
- 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="OPTION_PUT")
-public class OptionPut implements Serializable {
+@Table(name="OPTION_Call")
+public class OptionCall implements Serializable {
 private static final long serialVersionUID = 1L;
 	
 	
@@ -72,116 +81,122 @@ private static final long serialVersionUID = 1L;
 	private Client seller ;
 	 
 	private int Id_buyer ;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String getStartdate() {
 		return startdate;
 	}
+
 	public void setStartdate(String startdate) {
 		this.startdate = startdate;
 	}
-	
-	
-	
+
 	public Date getExpireddate() {
 		return expireddate;
 	}
+
 	public void setExpireddate(Date expireddate) {
 		this.expireddate = expireddate;
 	}
 
+	public double getSpotPrice() {
+		return SpotPrice;
+	}
+
+	public void setSpotPrice(double spotPrice) {
+		SpotPrice = spotPrice;
+	}
+
+	public double getStrikePrice() {
+		return strikePrice;
+	}
+
+	public void setStrikePrice(double strikePrice) {
+		this.strikePrice = strikePrice;
+	}
+
+	public double getPriceOption() {
+		return priceOption;
+	}
+
+	public void setPriceOption(double priceOption) {
+		this.priceOption = priceOption;
+	}
 
 	public String getStatut() {
 		return statut;
 	}
+
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
-	public double getStrikePrice() {
-		return strikePrice;
-	}
-	public void setStrikePrice(double strikePrice) {
-		this.strikePrice = strikePrice;
-	}
-	public double getPriceOption() {
-		return priceOption;
-	}
-	public void setPriceOption(double priceOption) {
-		this.priceOption = priceOption;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getstatut() {
-		return statut;
-	}
-	public void setstatut(String statut) {
-		this.statut = statut;
-	}
-	
-	
-	
-	
-	public int getId_buyer() {
-		return Id_buyer;
-	}
-	public void setId_buyer(int id_buyer) {
-		Id_buyer = id_buyer;
-	}
-	public double getSpotPrice() {
-		return SpotPrice;
-	}
-	public void setSpotPrice(double SpotPrice) {
-		this.SpotPrice = SpotPrice;
-	}
+
 	public double getVolatilty() {
 		return volatilty;
 	}
+
 	public void setVolatilty(double volatilty) {
 		this.volatilty = volatilty;
 	}
+
 	public double getRate() {
 		return rate;
 	}
+
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
-	
+
 	public double getT() {
 		return T;
 	}
+
 	public void setT(double t) {
 		T = t;
 	}
+
 	public double getQ() {
 		return q;
 	}
+
 	public void setQ(double q) {
 		this.q = q;
 	}
+
 	public Client getSeller() {
 		return seller;
 	}
+
 	public void setSeller(Client seller) {
 		this.seller = seller;
 	}
 
-	public OptionPut() {
+	public int getId_buyer() {
+		return Id_buyer;
+	}
+
+	public void setId_buyer(int id_buyer) {
+		Id_buyer = id_buyer;
+	}
+	public OptionCall() {
 		super();
 	}
-	public OptionPut(String code) {
-		super();
-		this.code = code;
-	}
-	public OptionPut( String code , double strikePrice, double priceOption,String startdate ,Date expireddate,String statut){
+	public OptionCall( String code , double strikePrice, double priceOption,String startdate ,Date expireddate,String statut){
 		this.startdate = startdate;
 		this.expireddate = expireddate;
 		this.strikePrice = strikePrice;
@@ -189,21 +204,22 @@ private static final long serialVersionUID = 1L;
 		this.code = code;
 		this.statut=statut;
 	}
-	public OptionPut( String code , double strikePrice, double priceOption){
+	public OptionCall( String code , double strikePrice, double priceOption){
 		
 		this.strikePrice = strikePrice;
 		this.priceOption = priceOption;
 		this.code = code;
 		
 	}
-	public OptionPut( String code , double strikePrice){
+	public OptionCall( String code , double strikePrice){
 		
 		this.strikePrice = strikePrice;
 		
 		this.code = code;
 		
 	}
-	public OptionPut(String startdate, Date expireddate, double SpotPrice, double strikePrice,
+	
+	public OptionCall(String startdate, Date expireddate, double SpotPrice, double strikePrice,
 			double priceOption, String statut, double volatilty, double rate,
 			double T, double q) {
 		super();
@@ -219,7 +235,7 @@ private static final long serialVersionUID = 1L;
 		this.T= T;
 		this.q=q;
 	}
-	public OptionPut(String startdate, Date expireddate, double spotPrice, double strikePrice,
+	public OptionCall(String startdate, Date expireddate, double spotPrice, double strikePrice,
 			double priceOption, String statut, double volatilty, double rate, double t, double q, Client seller) {
 		super();
 		
@@ -235,6 +251,4 @@ private static final long serialVersionUID = 1L;
 		this.q = q;
 		this.seller = seller;
 	}
-	
-	
 }
