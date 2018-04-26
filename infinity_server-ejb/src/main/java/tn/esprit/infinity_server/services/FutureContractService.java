@@ -13,7 +13,6 @@ import javax.persistence.TypedQuery;
 import tn.esprit.infinity_server.interfaces.FutureContractServiceLocal;
 import tn.esprit.infinity_server.interfaces.FutureContractServiceRemote;
 import tn.esprit.infinity_server.persistence.FutureContract;
-import tn.esprit.infinity_server.persistence.Symbole;
 
 
 /**
@@ -46,7 +45,7 @@ public class FutureContractService implements FutureContractServiceRemote, Futur
 	@Override
 	public FutureContract findFutureContractById(Integer id) {
 		FutureContract found = null;
-		String jpql = "select f from FutureContract f where s.id=:id";
+		String jpql = "select f from FutureContract f where f.id=:id";
 		TypedQuery<FutureContract> query = em.createQuery(jpql, FutureContract.class);
 		query.setParameter("id", id);
 		try {

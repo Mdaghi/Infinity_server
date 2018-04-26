@@ -24,6 +24,12 @@ public class UserService implements UserRemote, UserLocal {
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
 
+	/**
+	 * Returns a User object from login and password else it will returns a null
+	 * @param  login  a String that contain a login credentials
+	 * @param  password a String containing a secret password
+	 * @return User
+	 */
 	@Override
 	public User authenticate(String login, String password) {
 		User found = null;
@@ -39,7 +45,7 @@ public class UserService implements UserRemote, UserLocal {
 		}
 		return found;
 	}
-
+	
 	@Override
 	public void CreateUser(User u) {
 		em.persist(u);
