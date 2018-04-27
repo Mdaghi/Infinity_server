@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.ext.ParamConverter.Lazy;
+
 import tn.esprit.infinity_server.interfaces.UserLocal;
 import tn.esprit.infinity_server.interfaces.UserRemote;
 import tn.esprit.infinity_server.persistence.Address;
@@ -19,6 +22,7 @@ import tn.esprit.infinity_server.persistence.User;
  * Session Bean implementation class UserService
  */
 @Stateless
+@LocalBean
 public class UserService implements UserRemote, UserLocal {
 
 	@PersistenceContext(unitName = "infinity_server-ejb")
