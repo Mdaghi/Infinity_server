@@ -20,7 +20,7 @@ public interface OptionCallRemote {
 	public void updateStatutByID(String statut,int OptionCallId);
 	
 
-	public void removeOptionCallByCode(String codeOptionCall);
+	public void removeOptionCallByCode(int idOptionCall);
 	public double calculateOptionPrice(double S,double k, double T,double r,double q,
 			 double vol );
 	public Date convertDate(String s) throws ParseException;
@@ -28,11 +28,13 @@ public interface OptionCallRemote {
 
 	public List<OptionCall> StatutListOptionCall(String statut,int id);
 	public OptionCall getOptionById(int c);
-	public void UpdateCallOption(OptionCall o, int idClient);
+	public void UpdateCallOption(OptionCall o, int idClient,String statut,int idseller);
 	public void UpdateCallOption(OptionCall o, String statut);
 	public List<OptionCall> AvailableStatutListOptionCall(String statut, int idClient);
 	
 	public Long CountRow();
+	public void removeDate();
+	public double[] computeGreeks(double S, double K, double T, double r, double q, double vol);
 
 
 	

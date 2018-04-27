@@ -21,7 +21,7 @@ public interface OptionRemote {
 	public void updateStatutByID(String statut,int OptionPutId);
 	
 
-	public void removeOptionPutByCode(String codeOptionPut);
+	
 	public double calculateOptionPrice(double S,double k, double T,double r,double q,
 			 double vol );
 	public Date convertDate(String s) throws ParseException;
@@ -29,11 +29,15 @@ public interface OptionRemote {
 
 	public List<OptionPut> StatutListOptionPut(String statut,int id);
 	public OptionPut getOptionById(int c);
-	public void UpdatePutOption(OptionPut o, int idClient);
+	public void UpdatePutOption(OptionPut o, int idClient,String statut,int idseller);
 	public void UpdatePutOption(OptionPut o, String statut);
 	public List<OptionPut> AvailableStatutListOptionPut(String statut, int idClient);
 	
 	public Long CountRow();
+	public void removeOptionPutByCode(int idOptionPut);
+	public void removeDate();
+	void removeOptionPutByCode(String codeOptionPut);
+	public double[] computeGreeks(double S, double K, double T, double r, double q, double vol);
 
 
 	

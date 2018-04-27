@@ -4,6 +4,7 @@ import java.lang.Math;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,9 +46,12 @@ public class ClientOptionService implements OptionRemote{
 		
 	}
 	@Override
-	public void UpdatePutOption(OptionPut o,int idClient) {
-		Client client=em.find(Client.class, idClient);
+	public void UpdatePutOption(OptionPut o,int idClient,String statut,int idseller) {
+		
+		Client client=em.find(Client.class, idseller);
+		o.setSeller(client);
 		o.setId_buyer(idClient);
+		o.setstatut(statut);
 		em.merge(o);
 		
 	}
@@ -60,11 +64,29 @@ public class ClientOptionService implements OptionRemote{
 		
 	}
 	@Override
-	public void deleteOption(int IdOption) {
-	
-		em.remove(em.find(OptionPut.class,IdOption));
-		
+	public void removeDate(){
+		Query query =em.createQuery("SELECT o from OptionPut o ", OptionPut.class);
+		List<OptionPut> list =query.getResultList();
+		for (OptionPut optionput :list){
+			
+			 Calendar c = Calendar.getInstance ();
+			 Date localdate = c.getTime();
+			 Date expired = optionput.getExpireddate();
+			 double m=calculateMaturity(expired,localdate );
+			 
+			 if( m<0)
+			 {
+			removeOptionPutByCode(optionput.getId());
+			 }
+			
+		}
 	}
+	@Override
+	public void removeOptionPutByCode(int idOptionPut) {
+	em.remove(em.find(OptionPut.class,idOptionPut));
+	}
+
+
 	
 	@Override
 	public List<OptionPut> ListOptionPut() {
@@ -156,6 +178,35 @@ public class ClientOptionService implements OptionRemote{
 	         res = 1 - res;
 	      return res;
 	}
+	@Override 
+	 public double[] computeGreeks (double S,double K, double T,double r,double q,
+			 double vol )
+	{
+	 double dplus = (Math.log(S / K) + (r - q + Math.pow(vol,2) / 2) * T) / (vol * Math.sqrt(T));
+    double dminus = dplus - vol * Math.sqrt(T);
+    // compute Delta, Vega, Psi, Theta, Rho, Gamma and Volga
+    double[] greeks = new double[7];
+ // Delta
+    greeks[0] = -Math.exp(-q*T)*CND(-dplus);
+    // Vega
+    greeks[1] = S*Math.exp(-q*T)*ND(dplus)*Math.sqrt(T);
+  
+    // Theta
+    greeks[2] = -S*ND(dplus)*vol/(2*Math.sqrt(T))+r*K*Math.exp(-r*T)*CND(-dminus)-q*S*Math.exp(-q*T)*CND(-dplus);
+    // Gamma
+    greeks[3] = Math.exp(-q*T)*ND(dplus)/(S*vol*Math.sqrt(T)) ;
+    // Rho
+    greeks[4] = -K*T*Math.exp(-r*T)*CND(-dminus);
+  
+
+    
+       
+       return greeks;
+    }
+     
+     public static double ND(double x) {
+         return 1/Math.sqrt(2 * Math.PI) * Math.exp(-Math.pow(x,2)/2);
+      }
     
 	@Override
 	public Date convertDate(String s) throws ParseException {
@@ -174,10 +225,15 @@ public class ClientOptionService implements OptionRemote{
 	{
 		double maturity ;
 		maturity=  (d1.getTime()-d2.getTime())/86400000;
-	        return Math.abs(maturity);
+	        return maturity;
 		 
 		 
 	
+	}
+	@Override
+	public void deleteOption(int IdOption) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
