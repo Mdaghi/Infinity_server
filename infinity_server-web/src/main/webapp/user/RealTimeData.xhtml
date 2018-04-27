@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="head-end">
+		<ui:param name="renderBreadCrumb" value="false" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h2 class="align-center">Future Real Time Data</h2>
+		<p:dataTable var="future" value="#{realTimeDataBean.listFuture}">
+			<p:column headerText="Symbol">
+				<h:outputText value="#{future.symbol}" />
+			</p:column>
+
+			<p:column headerText="Company">
+				<h:outputText value="#{future.name}" />
+			</p:column>
+
+			<p:column headerText="Close">
+				<h:outputText value="#{future.close}" />
+			</p:column>
+
+			<p:column headerText="Open">
+				<h:outputText value="#{future.open}" />
+			</p:column>
+
+			<p:column headerText="Price">
+				<h:outputText value="#{future.lastPrice}" />
+			</p:column>
+
+			<p:column headerText="High">
+				<h:outputText value="#{future.high}" />
+			</p:column>
+
+			<p:column headerText="Low">
+				<h:outputText value="#{future.low}" />
+			</p:column>
+
+			<p:column headerText="Change">
+				<h:outputText value="#{future.netChange}" />
+			</p:column>
+
+			<p:column headerText="%Change">
+				<h:outputText value="#{future.percentChange}" />
+			</p:column>
+
+			<p:column headerText="Time">
+				<h:outputText value="#{future.tradeTimestamp}" />
+			</p:column>
+
+			<p:column headerText="Volume">
+				<h:outputText value="#{future.volume}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:splitButton value="Save" actionListener="#{buttonView.save}"
+				update="messages" icon="ui-icon-disk">
+				<p:menuitem value="Update" actionListener="#{buttonView.update}"
+					update="messages" icon="ui-icon-arrowrefresh-1-w" />
+				<p:menuitem value="Delete" actionListener="#{buttonView.delete}"
+					ajax="false" icon="ui-icon-close" />
+				<p:separator />
+				<p:menuitem value="Homepage" url="http://www.primefaces.org"
+					icon="ui-icon-extlink" />
+			</p:splitButton>
+		</h:form>
+
+
+	</ui:define>
+
+	<ui:define name="body">
+		<script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister()
+                    }
+                });*/
+
+                 window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+	</ui:define>
+
+
+</ui:composition>

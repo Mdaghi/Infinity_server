@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+
+
 import tn.esprit.infinity_server.interfaces.FutureContractServiceLocal;
 import tn.esprit.infinity_server.interfaces.FutureContractServiceRemote;
 import tn.esprit.infinity_server.persistence.FutureContract;
@@ -24,6 +26,7 @@ public class FutureContractService implements FutureContractServiceRemote, Futur
 
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
+
 
 	@Override
 	public void createFutureContract(FutureContract future) {
@@ -82,5 +85,4 @@ public class FutureContractService implements FutureContractServiceRemote, Futur
 		}
 		return resultList;
 	}
-
 }
