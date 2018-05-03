@@ -1,4 +1,4 @@
-package com.github.adminfaces.starter.infra.security;
+package tn.esprit.infinity_server.presentation.mbeans;
 
 
 
@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import java.util.Date;
 import java.util.List;
 
@@ -25,19 +26,17 @@ import javax.validation.constraints.NotNull;
 import org.omnifaces.util.Faces;
 import org.primefaces.component.log.Log;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 
-import javafx.scene.chart.XYChart;
+
+
 import tn.esprit.infinity_server.persistence.Client;
-import tn.esprit.infinity_server.persistence.OptionPut;
-import tn.esprit.infinity_server.services.ClientOptionService;
+import tn.esprit.infinity_server.persistence.OptionCall;
+import tn.esprit.infinity_server.services.ClientOptionCallService ;
+
 
 @ManagedBean
 @SessionScoped
-public class OptionPutBean implements Serializable {
+public class OptionCallBean implements Serializable {
 	private int id;
 
 	private String code ;
@@ -63,13 +62,13 @@ public class OptionPutBean implements Serializable {
 
 	private double q ;
 	
-	private List <OptionPut> optionPuts ;
+	private List <OptionCall> optionCalls ;
 	
 	private Client seller ;
 	
 	private int idBuyer ;
 	
-	private OptionPut selectedOption ;
+	private OptionCall selectedOption ;
 	
 	private int idselectedOption;
 	
@@ -78,7 +77,7 @@ public class OptionPutBean implements Serializable {
 	private double[] BioCall ;
 
 	@EJB
-	ClientOptionService OptionService ;
+	ClientOptionCallService OptionService ;
 	
 	
 	public int getId() {
@@ -229,11 +228,14 @@ public class OptionPutBean implements Serializable {
 	}
 
 
-	public OptionPutBean() {
+	
+
+   
+	public OptionCallBean() {
 		super();
 	}
 
-   
+
 	public int getIdselectedOption() {
 		return idselectedOption;
 	}
@@ -244,7 +246,7 @@ public class OptionPutBean implements Serializable {
 	}
 
 
-	public OptionPutBean(String code, String startdate, Date expireddate, double spotPrice, double strikePrice,
+	public OptionCallBean(String code, String startdate, Date expireddate, double spotPrice, double strikePrice,
 			double priceOption, String statut, double volatilty, double rate, double t, double q) {
 		super();
 		this.code = code;
@@ -261,25 +263,25 @@ public class OptionPutBean implements Serializable {
 	}
 	
 	
-	public OptionPut getSelectedOption() {
+	public OptionCall getSelectedOption() {
 		return selectedOption;
 	}
 
 
-	public void setSelectedOption(OptionPut selectedOption) {
+	public void setSelectedOption(OptionCall selectedOption) {
 		this.selectedOption = selectedOption;
 	}
 
 
-	public List<OptionPut> getOptionPuts() {
+	public List<OptionCall> getOptionPuts() {
 	
-		optionPuts = OptionService.ListOptionPut();
-		return optionPuts;
+		optionCalls = OptionService.ListOptionCall();
+		return optionCalls;
 	}
 
 
-	public void setOptionPuts(List<OptionPut> optionPuts) {
-		this.optionPuts = optionPuts;
+	public void setOptionPuts(List<OptionCall> optionPuts) {
+		this.optionCalls = optionPuts;
 	}
 
 
@@ -298,7 +300,7 @@ public class OptionPutBean implements Serializable {
 	@PostConstruct
 	public void init() {
     	
-	selectedOption =new OptionPut() ;
+	selectedOption =new OptionCall() ;
 	OptionService.removeDate();
 	
 	
@@ -311,7 +313,7 @@ public class OptionPutBean implements Serializable {
 	     
 	    T= OptionService.calculateMaturity(expireddate,date)  ;
 		
-		OptionService.createPutOption(new OptionPut(startdate,  expireddate, spotPrice,  strikePrice,
+		OptionService.createCallOption(new OptionCall(startdate,  expireddate, spotPrice,  strikePrice,
 				priceOption, "NotAvailable", volatilty, rate,  T,  q),  idClient);
 		FacesContext context = FacesContext.getCurrentInstance();
         
@@ -319,15 +321,15 @@ public class OptionPutBean implements Serializable {
 	
 	}
 	
-    public List<OptionPut> DisplayAvailableListPut (String s,int idClient){
+    public List<OptionCall> DisplayAvailableListCall (String s,int idClient){
     	
-    	optionPuts =OptionService.StatutListOptionPut(s,idClient);
-    	return optionPuts;
+    	optionCalls =OptionService.StatutListOptionCall(s,idClient);
+    	return optionCalls;
     }
     
- public List<OptionPut>   StatutListOptionPut (int idClient){
+ public List<OptionCall>   StatutListOptionCall (int idClient){
     	
-    	List <OptionPut> optionP =OptionService.StatutListOptionPut("NotAvailable",idClient);
+    	List <OptionCall> optionP =OptionService.StatutListOptionCall("NotAvailable",idClient);
     	return optionP;
     }
     
@@ -338,16 +340,7 @@ public class OptionPutBean implements Serializable {
 				
 	}
 	
-	public double[] BIOCALL (int N, double S, double St, double u, double d) {
-		
-		return OptionService.BioCall(N, S, St, u, d);
-	}
-
-public double[] BICALLOPTION (double [] a, int N, double R, double u, double d,double  T) {
-		
-		return OptionService.BiOption(a, N, R, u, d, T) ;
-	}
-
+	
 	public double maturity() {
 	Calendar c = Calendar.getInstance ();
     Date stdate = c.getTime();
@@ -359,15 +352,15 @@ public double[] BICALLOPTION (double [] a, int N, double R, double u, double d,d
     return maturity; 
 	}
 	
-	public void BuyPutOption(OptionPut o,int idClient,int idseller) {
+	public void BuyCallOption(OptionCall o,int idClient,int idseller) {
 		
-		OptionService.UpdatePutOption(o, idClient,"NotAvailable", idseller); 
+		OptionService.UpdateCallOption(o, idClient,"NotAvailable", idseller); 
   
 }
 	
-	public void SellPutOption (OptionPut o){
+	public void SellCallOption (OptionCall o){
 		
-		OptionService.UpdatePutOption(o, "Available");
+		OptionService.UpdateCallOption(o, "Available");
 		
 	}
 	
@@ -375,15 +368,15 @@ public double[] BICALLOPTION (double [] a, int N, double R, double u, double d,d
 		
 		return OptionService.computeGreeks(spotPrice, strikePrice, T, rate, q, volatilty) ;
 	}
-	
+
 	public double americanput () {
+	return 0;
+		
 	
-		int n=12;
-	
-		return OptionService.americanput( T,spotPrice, strikePrice, rate, volatilty, q, n) ;
+		
 	}
 	public void onRowSelect(SelectEvent event) {
-       OptionPut optionput= ((OptionPut)event.getObject());
+       OptionCall optionput= ((OptionCall)event.getObject());
 	}
 	
 	
@@ -411,13 +404,6 @@ public double[] BICALLOPTION (double [] a, int N, double R, double u, double d,d
    
 
 }
-
-
-
-
-
-
-
 
 
 

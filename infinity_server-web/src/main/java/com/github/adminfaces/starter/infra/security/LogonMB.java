@@ -46,6 +46,7 @@ public class LogonMB extends AdminSession implements Serializable {
 	private String login;
 	private String password;
 	private boolean remember;
+	
 
 	public void login() throws IOException {
 		currentUser = login;
@@ -99,7 +100,8 @@ public class LogonMB extends AdminSession implements Serializable {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	
+
+
 	
 
 }

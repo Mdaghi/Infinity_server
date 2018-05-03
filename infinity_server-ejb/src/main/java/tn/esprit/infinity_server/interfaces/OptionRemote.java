@@ -38,6 +38,13 @@ public interface OptionRemote {
 	public void removeDate();
 	void removeOptionPutByCode(String codeOptionPut);
 	public double[] computeGreeks(double S, double K, double T, double r, double q, double vol);
+	public List<OptionPut> StatutListOptionPut(int idClient);
+	public void update(OptionPut o);
+	
+	
+	public double[] BiOption(double[] a, int N, double R, double u, double d, double T);
+	public double[] BioCall(int N, double S, double St, double u, double d);
+	
 
 
 	

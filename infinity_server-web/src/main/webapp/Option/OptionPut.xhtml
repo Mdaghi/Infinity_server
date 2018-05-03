@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:define name="head-end">
+		<ui:param name="renderBreadCrumb" value="false" />
+	</ui:define>
+    <ui:define name="title">
+		<h2 class="align-center">Option Put</h2>
+		
+
+  	
+    
+    
+
+      
+     <h3> NEEEEEEEEEEEEEEEEWWW</h3>
+ 
+ 
+
+     
+      
+       
+         <p:commandButton id="s" value="Sell" action="#{optionPutBean.show()}" />
+      
+        <p:overlayPanel id="moviePanel" for="s" hideEffect="fade" dynamic="true" style="width:600px">
+      <p:dataTable id="Sputdisplay"  value="#{optionPutBean.StatutListOptionPut(1)}" var="optionPut"  border="1"  >
+      
+       
+    
+      <p:column headerText="Code">
+    	<f:facet name="header">
+    		<h:outputText value="Code" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.code}" />
+    
+    </p:column>
+    
+     <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="SpotPrice" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.spotPrice}" />
+    
+    </p:column>
+    
+    <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="StrikePrice" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.strikePrice}" />
+    
+    </p:column>
+    
+  	 <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Statut" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.statut}" />
+    
+    </p:column>   
+  
+   <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Option Price" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.priceOption}" />
+    
+    </p:column> 
+    
+     <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Maturity" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.t}" />
+    
+    </p:column> 
+    
+       <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Action" />
+    		
+    	</f:facet>
+    	 <h:form id="modf">
+    	<h:commandButton action="#{optionPutBean.SellPutOption (optionPut)}" value="Modifier" />
+    </h:form>
+    
+    </p:column>
+	
+<p:column >
+             <p:commandButton  oncomplete="PF('putDialog').show()" icon="ui-icon-search" title="View">
+                <f:setPropertyActionListener value="#{optionPut}" target="#{optionPutBean.selectedOption}" />
+            </p:commandButton>
+        </p:column>
+
+
+    </p:dataTable>
+         </p:overlayPanel>
+       
+             <p:dialog header="OptionPut Info"  styleClass="text-align:center;" widgetVar="putDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="putDetail"  style="text-align:center;" >
+            <p:panelGrid  columns="2" rendered="#{not empty optionPutBean.selectedOption}" >
+              
+                <h:outputText value="Code:" style="color : red; width: 200px; "  />
+                <h:outputText value="#{optionPutBean.selectedOption.code}" />
+                
+                 <h:outputText value="Strike Price"  style="color : red; width: 200px; " />
+                <h:outputText value="#{optionPutBean.selectedOption.strikePrice}" />
+				
+				  <h:outputText value="Spot Price:"  style="color : red; width: 200px; " />
+                <h:outputText value="#{optionPutBean.selectedOption.spotPrice}" />
+                
+                  <h:outputText value="Option Price:"  style="color : red; width: 200px; " />
+                <h:outputText value="#{optionPutBean.selectedOption.priceOption}" />
+                
+                  <h:outputText value="Maturity :"  style="color : red; width: 200px; " />
+                <h:outputText value="#{optionPutBean.selectedOption.t}" /> 
+                
+                  <h:outputText value="Option Price:"  style="color : red; width: 200px; " />
+                <h:outputText value="#{optionPutBean.selectedOption.expireddate}" />
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+   
+    
+
+<h:form id="add">
+        <p:fieldset legend="Basic" style="margin-bottom:20px">
+    
+    <h:panelGrid columns="3" cellpadding="5">
+    	
+    
+        <p:outputLabel value="Spot Price : "  />
+   		<p:inputNumber id="spotid" value="#{optionPutBean.spotPrice}"  required="true"  requiredMessage="Invalid Spot Price" minValue="1"  />
+   		<p:message for="spotid" display="icon"  style="color : red"/>
+   		
+        <p:outputLabel value="Strike Price : "  />
+        <p:inputNumber value="#{optionPutBean.strikePrice}" id="strikePrice" required="true" requiredMessage="Invalid StrikePrice" minValue="1" />
+        <p:message for="strikePrice" display="icon"  style="color : red"/>
+      
+      	<p:outputLabel value="Interst Rate : "  />    
+   		<p:inputNumber id="rate" value="#{optionPutBean.rate}"  required="true" requiredMessage="Invalid Rate" validatorMessage="rien ">
+   		<f:validateDoubleRange minimum="0"  maximum="1" for="rate"></f:validateDoubleRange>
+		</p:inputNumber>
+		<p:message for="rate" display="icon"  style="color : red"/>
+   
+     	<p:outputLabel value="Volatility : "  />      
+  		<p:inputNumber id="vol" value="#{optionPutBean.volatilty}"  required="true" requiredMessage="Invalid Volatility" minValue="0" maxValue="1"/>
+   	    <p:message for="vol" display="icon"  style="color : red"/>
+  
+     	<p:outputLabel  value="Annual Dividend Rate : "  />
+   		<p:inputNumber id="AnnRate" value="#{optionPutBean.q}"  required="true" requiredMessage="Invalid Annual Rate" minValue="0"/>
+        <p:message for="AnnRate" display="icon"  style="color : red"/>
+   
+   		
+    	<p:outputLabel for="date" value="Expired Date : "  />
+        <p:calendar id="date" value="#{optionPutBean.expireddate}" showOn="button" required="true" requiredMessage="Invalid date" />
+        <p:message for="date" display="icon"  style="color : red"/>
+	
+	</h:panelGrid>
+	
+      <h:panelGrid columns="3" cellpadding="5">
+        
+		<h:form>
+		
+  
+        	<h:outputLabel for="price" value="Option Price:" style="font-weight:bold" />
+        
+        	<p:commandButton value="Submit" update="display" icon="ui-icon-check" />
+       
+        	<h:outputLabel  id="display" value="#{optionPutBean.priceOption}"/>
+
+    
+    
+		</h:form>
+
+	
+		<h:form>
+		
+   			
+        <h:outputLabel for="price" value="American Price:" style="font-weight:bold" />
+        
+        <p:commandButton value="Submit" update="dis" icon="ui-icon-check" />
+       
+        <h:outputLabel  id="dis" value="#{optionPutBean.americanput()}"/>
+
+    
+    
+</h:form>
+
+
+        
+		<h:form>
+	
+    <h:panelGrid columns="4" cellpadding="5">
+        <h:outputLabel for="GREEKs" value="Greeks:" style="font-weight:bold;  margin: 2px 50px 75px 100px;" />
+        
+        <p:commandButton value="SHOW greeks" update="displayy" icon="ui-icon-check" />
+       <p:dataTable id="displayy" value="#{optionPutBean.CalculateGreeks()}" styleClass=" margin: 2px 50px 75px 100px;"  var="greeks"> 
+           <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Delta" />
+    	</f:facet>
+    	<h:outputText value="#{greeks[0]}" />
+    
+    </p:column>
+  
+                 <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Vega" />
+    	</f:facet>
+    	<h:outputText value="#{greeks[1]}" />
+    
+    </p:column>
+    
+              <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Theta" />
+    	</f:facet>
+    	<h:outputText value="#{greeks[2]}" />
+    
+    </p:column>
+    
+              <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Gamma" />
+    	</f:facet>
+    	<h:outputText value="#{greeks[3]}" />
+    
+    </p:column>
+    
+              <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Rho" />
+    	</f:facet>
+    	<h:outputText value="#{greeks[4]}" />
+    
+    </p:column>
+         </p:dataTable>
+      
+   
+    </h:panelGrid>
+    
+    
+</h:form>
+		 </h:panelGrid>
+    <h:commandButton   actionListener="#{optionPutBean.addPutOption(1)}" update="add"  value="Ajouter Employe"  styleClass="ui-priority-primary" />
+       
+   
+        
+  
+    </p:fieldset>
+</h:form>
+  
+<p:dataTable id="Bputdisplay"  value="#{optionPutBean.DisplayAvailableListPut('Available',1)}" var="optionPut"  border="1"  >
+      
+       
+    
+      <p:column headerText="Code">
+    	<f:facet name="header">
+    		<h:outputText value="Code" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.code}" />
+    
+    </p:column>
+    
+     <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="SpotPrice" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.spotPrice}" />
+    
+    </p:column>
+    
+    <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="StrikePrice" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.strikePrice}" />
+    
+    </p:column>
+    
+     
+  	 <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Statut" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.statut}" />
+    
+    </p:column>   
+  
+   <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Option Price" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.priceOption}" />
+    
+    </p:column> 
+    
+     <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Maturity" />
+    	</f:facet>
+    	<h:outputText value="#{optionPut.t}" />
+    
+    </p:column>
+  
+       <p:column>
+    	<f:facet name="header">
+    		<h:outputText value="Action" />
+    		
+    	</f:facet>
+    	 <h:form id="modf">
+    	<h:commandButton action="#{optionPutBean.BuyPutOption(optionPut,1,1)}" value="Modifier" />
+    </h:form>
+    
+    </p:column>
+	
+<p:column >
+             <p:commandButton  oncomplete="PF('putDialog').show()" icon="ui-icon-search" title="View">
+                <f:setPropertyActionListener value="#{optionPut}" target="#{optionPutBean.selectedOption}" />
+            </p:commandButton>
+        </p:column>
+
+
+    </p:dataTable>
+    
+    </ui:define>
+
+   <ui:define name="body">
+		<script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister()
+                    }
+                });*/
+
+                 window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+	</ui:define>
+
+
+</ui:composition>

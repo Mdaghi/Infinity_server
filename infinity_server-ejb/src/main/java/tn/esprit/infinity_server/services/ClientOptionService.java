@@ -4,10 +4,12 @@ import java.lang.Math;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
@@ -23,6 +25,7 @@ import tn.esprit.infinity_server.persistence.WatchList;
 import tn.esprit.infinity_server.interfaces.OptionRemote;
 
 @Stateless
+@LocalBean
 public class ClientOptionService implements OptionRemote{
 
 	@PersistenceContext(unitName="infinity_server-ejb")
@@ -36,6 +39,12 @@ public class ClientOptionService implements OptionRemote{
 		o.setCode("OPTPUT"+n);
 		em.persist(o);
 		
+	}
+	
+	@Override 
+	public void update(OptionPut o) {
+		
+		em.merge(o);
 	}
 	@Override
 	public Long CountRow() {
@@ -100,7 +109,17 @@ public class ClientOptionService implements OptionRemote{
 		query.setParameter("statut",statut);
 		query.setParameter("seller",seller);
 		return query.getResultList();
+
+	}
+	
+	@Override
+	public List<OptionPut> StatutListOptionPut(int idClient) {
+		Client seller=em.find(Client.class, idClient);
+		Query query=em.createQuery("SELECT o from OptionPut o WHERE o.statut = 'Available' and o.seller= :seller", OptionPut.class);
 		
+		query.setParameter("seller",seller);
+		return query.getResultList();
+
 	}
 	@Override
 	public List<OptionPut> AvailableStatutListOptionPut(String statut,int idClient) {
@@ -236,4 +255,114 @@ public class ClientOptionService implements OptionRemote{
 		
 	}
 
+	
+	/***********************************************************************************/
+	
+
+		
+		@Override
+		public double[] BioCall(int N, double S, double St,double u, double d){
+		double[] a=new double[(N+2)*(N+1)/2];
+		for(int i=0;i<a.length;i++){
+		a[i]=Big(S*Math.pow(d,Column(i+1)-Row(i+1))*Math.pow(u, Row(i+1))-St,0);
+		}
+		return a;
+		}
+		
+		
+		public double[] BioPut(int N, double S, double St,double u, double d){
+		double[] a=new double[(N+2)*(N+1)/2];
+		for(int i=0;i<a.length;i++){
+		a[i]=Big(St-S*Math.pow(d,Column(i+1)-Row(i+1))*Math.pow(u, Row(i+1)),0);
+		}
+		return a;
+		}
+		
+		@Override
+	   public  double[] BiOption(double[] a, int N, double R, double u, double d, double T){
+		int le=a.length;
+		int b=Column(le);
+		int pos=le-b-1;
+		double t=T/N;
+		double p=(1+R*t-d)/(u-d);
+		for(int j=0;j<=N;j++){
+		for(int i=pos;i<le-1;i++){
+		double aa=a[i-b];
+		a[i-b]=Big(aa,(1/(1+R*t))*(a[i]*(1-p)+a[i+1]*p));
+		}
+		pos=pos-b;
+		le=le-b-1;
+		b--;
+		}
+		return a;
+		}
+	   
+		public double[] EuropeanBiOption(double[] a, int N, double R, double u,
+		double d, double T){
+		int le=a.length;
+		int b=Column(le);
+		int pos=le-b-1;
+		double t=T/N;
+		double p=(1+R*t-d)/(u-d);
+		for(int j=0;j<=N;j++){
+		for(int i=pos;i<le-1;i++){
+		    
+		a[i-b]=(1/(1+R*t))*(a[i]*(1-p)+a[i+1]*p);
+		}
+		pos=pos-b;
+		le=le-b-1;
+		b--;
+		}
+		return a;
+		}
+		
+		private  double Big(double a, double b){
+		if(a>=b){
+		return a;
+		}
+		else{
+		return b;
+		}
+		}
+		
+		private  int Column(int a){
+		int sum=0;
+		int k=0;
+		while(sum<a){
+		k++;
+		sum=sum+k;
+		}
+		return k-1;
+		}
+		private int Row(int a){
+		int b=a-(1+Column(a))*(Column(a))/2;
+		return b-1;
+		}
+		
+		public double americanput (double T,double S,double K,double r,double sigma,double q,int n){
+			
+			double deltaT=T/n;
+			double up=Math.exp(sigma*Math.sqrt(deltaT));
+			double p0 = (up*Math.exp(-q * deltaT) - Math.exp(-r * deltaT)) /  Math.pow(up, 2-1) ;
+		    double p1 = Math.exp(-r * deltaT) - p0;
+		    double[] p =new double[1000]; 
+		    
+		    for(int i=0 ;i<n;i++) {
+		    	
+		        
+		        p[i] = K - S *  Math.pow(up, 2*i - n);
+		        if (p[i] < 0) { p[i] = 0; }
+		    }
+		   
+		    for (int j= n-1 ; j>0;j--)  {
+		        for (int i=0;i<j;i++ ) {
+		            p[i] = p0 * p[i+1] + p1 * p[i];   
+		           double exercise = K - S * Math.pow(up, 2*i - j);  
+		            if (p[i] < exercise) {p[i]= exercise; }
+		        }
+		}
+		
+		    return  p[0];
+		}
+		
 }

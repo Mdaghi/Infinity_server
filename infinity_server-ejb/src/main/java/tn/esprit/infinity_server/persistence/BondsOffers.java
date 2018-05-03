@@ -131,8 +131,8 @@ public class BondsOffers implements Serializable {
 	public void setSeries(String series) {
 		this.series = series;
 	}
-	public void setIssueDate(java.sql.Date issueDate) {
-		this.issueDate = issueDate;
+	public void setIssueDate(Date date) {
+		this.issueDate = (java.sql.Date) date;
 	}
 	public void setAddress(String address) {
 		this.address = address;
@@ -140,8 +140,8 @@ public class BondsOffers implements Serializable {
 	public void setPrintPlace(String printPlace) {
 		this.printPlace = printPlace;
 	}
-	public void setPrintDate(java.sql.Date printDate) {
-		this.printDate = printDate;
+	public void setPrintDate(Date date) {
+		this.printDate = (java.sql.Date) date;
 	}
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
@@ -149,8 +149,8 @@ public class BondsOffers implements Serializable {
 	public void setCouponRate(Float couponRate) {
 		this.couponRate = couponRate;
 	}
-	public void setMaturityDate(java.sql.Date maturityDate) {
-		this.maturityDate = maturityDate;
+	public void setMaturityDate(Date date) {
+		this.maturityDate = (java.sql.Date) date;
 	}
 	public void setFrequencyRate(String frequencyRate) {
 		this.frequencyRate = frequencyRate;
