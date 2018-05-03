@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="head-end">
+		<ui:param name="renderBreadCrumb" value="false" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h2 class="align-center">Change Currency Calculator</h2>
+
+		<h:form id="form">
+
+			<p:ring id="custom" value="#{informationBean.listSymbols}"
+				var="symbol" styleClass="image-ring" easing="easeInOutBack">
+				<p:commandLink actionListener="#{informationBean.initDataBySymbol(symbol.symbol)}" update=":form:data" width="100" height="100">
+					<p:graphicImage id="img" value="#{resource[symbol.path]}" width="100" height="50" />
+				</p:commandLink>
+			</p:ring>
+			<br />
+			<br />
+			<br />
+
+
+			<p:dataGrid var="info" value="#{informationBean.listInformation}"
+				id="data" columns="1" layout="grid" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="4,8,16">
+
+				<f:facet name="header">Articles</f:facet>
+
+				<p:fieldset legend="#{info.title}" toggleable="true"
+					toggleSpeed="500">
+					<h:panelGrid columns="3" cellpadding="5">
+						<p:graphicImage url="#{info.urlToImage}" width="300" height="200" />
+						<h:panelGrid columns="1" cellpadding="5" style="margin-left:20px;">
+							<h:outputText value="#{info.description}"></h:outputText>
+							<h:outputLink value="#{info.url}" target="_blank">
+								<h:outputText value="Learn more" style="color:blue;"></h:outputText>
+							</h:outputLink>
+							<h:outputText value="#{info.publishedAt}"></h:outputText>
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:fieldset>
+			</p:dataGrid>
+
+		</h:form>
+
+	</ui:define>
+
+	<ui:define name="body">
+		<script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister()
+                    }
+                });*/
+
+                 window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+	</ui:define>
+
+
+</ui:composition>

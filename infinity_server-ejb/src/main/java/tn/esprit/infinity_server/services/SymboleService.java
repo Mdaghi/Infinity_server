@@ -109,9 +109,9 @@ public class SymboleService implements SymboleServiceRemote, SymboleServiceLocal
 		List<Symbole> lst = findAllSymbole();
 		for (int i = 0; i < lst.size(); i++) {
 			if (i == lst.size() - 1)
-				str.append('"'+lst.get(i).getName()+'"');
+				str.append(lst.get(i).getName());
 			else
-				str.append('"'+lst.get(i).getName()+'"'+",") ;
+				str.append(lst.get(i).getName()+",") ;
 		}
 		return str.toString();
 	}
@@ -212,6 +212,8 @@ public class SymboleService implements SymboleServiceRemote, SymboleServiceLocal
 		query.setParameter("name", name);
 		return query.getSingleResult();
 	}
+
+	
 	
 	
 

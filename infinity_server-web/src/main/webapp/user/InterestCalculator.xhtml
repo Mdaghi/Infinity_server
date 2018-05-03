@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="head-end">
+		<ui:param name="renderBreadCrumb" value="false" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h2 class="align-center">Change Currency Calculator</h2>
+
+		<h:form id="form">
+
+			<!--  <p:ring id="basic" value="#{ringView.cars}" var="car">
+					<p:commandButton update=":form:carDetail" icon="ui-icon-search"
+						title="View" oncomplete="PF('carDialog').show();" style="background-img:#{resource['favicon/favicon.ico']}">
+						<f:setPropertyActionListener value="#{car}"
+							target="#{ringView.selectedCar}" />
+					</p:commandButton>
+				</p:outputPanel>
+			</p:ring>
+			
+			-->
+
+			<p:dataGrid var="rate" value="#{interestRealTimeBean.listRates}"
+				id="data" columns="3" layout="grid" rows="3" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="4,8,16">
+
+				<f:facet name="header">Taux d'echange</f:facet>
+
+				<p:outputPanel id="carDetail" style="text-align:center;">
+					<p:panelGrid columns="2" columnClasses="value,value">
+						<f:facet name="header">
+							<p:graphicImage value="#{resource[rate.symbole]}" />
+							
+						</f:facet>
+
+						<h:outputText value="AUD :" />
+						<h:outputText value="#{rate.taux.aud}" />
+
+						<h:outputText value="CAD :" />
+						<h:outputText value="#{rate.taux.cad}" />
+
+						<h:outputText value="CNY :" />
+						<h:outputText value="#{rate.taux.cny}" />
+
+						<h:outputText value="EUR :" />
+						<h:outputText value="#{rate.taux.eur}" />
+
+						<h:outputText value="GPB :" />
+						<h:outputText value="#{rate.taux.gpb}" />
+
+						<h:outputText value="INR :" />
+						<h:outputText value="#{rate.taux.inr}" />
+
+						<h:outputText value="JPY :" />
+						<h:outputText value="#{rate.taux.jpy}" />
+
+						<h:outputText value="RUB :" />
+						<h:outputText value="#{rate.taux.rub}" />
+
+						<h:outputText value="TND :" />
+						<h:outputText value="#{rate.taux.tnd}" />
+
+						<h:outputText value="USD :" />
+						<h:outputText value="#{rate.taux.usd}" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dataGrid>
+		</h:form>
+
+	</ui:define>
+
+	<ui:define name="body">
+		<script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister()
+                    }
+                });*/
+
+                 window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+	</ui:define>
+
+
+</ui:composition>

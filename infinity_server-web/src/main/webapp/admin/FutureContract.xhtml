@@ -3,17 +3,15 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	template="/WEB-INF/templates/template.xhtml">
+	template="/WEB-INF/templates/templateAdmin.xhtml">
 
 	<ui:define name="head-end">
 		<ui:param name="renderBreadCrumb" value="false" />
 	</ui:define>
 
 	<ui:define name="title">
-		<h2 class="align-center">Future Real Time Data</h2>
-		<h:form >
-		<p:poll interval="10" listener="#{realTimeDataBean.init()}" update="table" />
-		<p:dataTable var="future" value="#{realTimeDataBean.listFuture}" id="table" > 
+		<h2 class="align-center">Manage Symbols</h2>
+		<p:dataTable var="future" value="#{realTimeDataBean.listFuture}">
 			<p:column headerText="Symbol">
 				<h:outputText value="#{future.symbol}" />
 			</p:column>
@@ -65,7 +63,7 @@
 		</p:dataTable>
 
 		
-</h:form>
+
 
 
 

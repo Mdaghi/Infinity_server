@@ -10,10 +10,10 @@ import tn.esprit.infinity_server.services.UserService;
 import org.omnifaces.util.Faces;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+
 import javax.enterprise.inject.Specializes;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
@@ -38,10 +38,15 @@ import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 @ManagedBean
 public class LogonMB extends AdminSession implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	UserService userService;
 
-	private User user;
+	public static User user;
 	private String currentUser;
 	private String login;
 	private String password;
@@ -51,22 +56,24 @@ public class LogonMB extends AdminSession implements Serializable {
 	public void login() throws IOException {
 		currentUser = login;
 		user = userService.authenticate(login, password);
-		System.err.println(user);
-		if(user == null)
+		if (user == null)
 			return;
 		addDetailMessage("Logged in successfully as <b>" + login + "</b>");
 		Faces.getExternalContext().getFlash().setKeepMessages(true);
-		if(user instanceof Client)
+		if (user instanceof Client)
 			Faces.redirect("index.jsf");
 		else if (user instanceof Administrator)
-			Faces.redirect("/admin/admin.jsf");
-		
+			Faces.redirect("admin/admin.jsf");
+		else
+			return;
+
 	}
 
-	@Override
-	public boolean isLoggedIn() {
 
-		return currentUser != null;
+	public void logout() throws IOException {
+		Faces.getExternalContext().invalidateSession();
+		Faces.redirect("login.jsf");
+		user=null;
 	}
 
 	public String getPassword() {
@@ -101,7 +108,9 @@ public class LogonMB extends AdminSession implements Serializable {
 		this.login = login;
 	}
 
+	@Override
+	public boolean isLoggedIn() {
 
-	
-
+		return currentUser != null;
+	}
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="head-end">
+		<ui:param name="renderBreadCrumb" value="false" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h2 class="align-center">Future</h2>
+		<!--  -->
+
+
+		<h:form id="form">
+
+
+			<p:dataTable var="future"
+				value="#{futureGainBean.lst}" paginator="true"
+				rows="10" id="data">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="List" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column headerText="Name" style="width:90px">
+					<h:outputText value="#{future.symbol}" />
+				</p:column>
+
+
+				<p:column headerText="Maturity Date" style="width:90px">
+					<h:outputText value="#{future.dateMaturite}" />
+				</p:column>
+
+				<p:column headerText="Contract size" style="width:90px">
+					<h:outputText value="#{future.size}" />
+				</p:column>
+				
+				<p:column headerText="Maturity Price" style="width:90px">
+					<h:outputText value="#{future.maturityPrice}" />
+				</p:column>
+				
+				<p:column headerText="Current Price" style="width:90px">
+					<h:outputText value="#{future.currentPrice}" />
+				</p:column>
+				
+				<p:column headerText="%Chg" style="width:90px">
+					<h:outputText value="#{future.netChange}" 
+					 style="#{future.netChange.contains('-')  ? 'color:red' : 'color:green'}" />
+				</p:column>
+				
+				<p:column headerText="%Chg" style="width:90px">
+					<h:outputText value="#{future.percentChange}" 
+					style="#{future.percentChange.contains('-')  ? 'color:red' : 'color:green'}" />
+				</p:column>
+				
+				<p:column headerText="Gain" style="width:90px">
+					<h:outputText value="#{future.gain}"
+					style="#{future.gain.contains('-')  ? 'color:red' : 'color:green'}" />
+				</p:column>
+				
+				
+			</p:dataTable>
+
+		</h:form>
+		<!--  -->
+	</ui:define>
+
+	<ui:define name="body">
+		<script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister()
+                    }
+                });*/
+
+                 window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+	</ui:define>
+</ui:composition>
