@@ -3,6 +3,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="head-end">
@@ -10,65 +11,33 @@
 	</ui:define>
 
 	<ui:define name="title">
-		<h2 class="align-center">Future Real Time Data</h2>
-		<h:form >
-		<p:poll interval="10" listener="#{realTimeDataBean.init()}" update="table" />
-		<p:dataTable var="future" value="#{realTimeDataBean.listFuture}" id="table" > 
-			<p:column headerText="Symbol">
-				<h:outputText value="#{future.symbol}" />
-			</p:column>
-
-			<p:column headerText="Company">
-				<h:outputText value="#{future.name}" />
-			</p:column>
-
-			<p:column headerText="Close">
-				<h:outputText value="#{future.close}" />
-			</p:column>
-
-			<p:column headerText="Open">
-				<h:outputText value="#{future.open}" />
-			</p:column>
-
-			<p:column headerText="Price">
-				<h:outputText value="#{future.lastPrice}" />
-			</p:column>
-
-			<p:column headerText="High">
-				<h:outputText value="#{future.high}" />
-			</p:column>
-
-			<p:column headerText="Low">
-				<h:outputText value="#{future.low}" />
-			</p:column>
-
-			<p:column headerText="Change">
-				<h:outputText value="#{future.netChange}" 
-				 style="#{future.netChange.contains('-')  ? 'color:red' : 'color:green'}"
-				 />
-			</p:column>
-
-			<p:column headerText="%Change">
-				<h:outputText value="#{future.percentChange}" 
-				style="#{future.percentChange.contains('-')  ? 'color:red' : 'color:green'}"
-				/>
-			</p:column>
-
-			<p:column headerText="Time">
-				<h:outputText value="#{future.tradeTimestamp}" />
-			</p:column>
-
-			<p:column headerText="Volume">
-				<h:outputText value="#{future.volume}" />
-			</p:column>
-
-		</p:dataTable>
-
+		<h2 class="align-center">Statistic Future Contract</h2>
 		
+	<h:form id="form">
+    <p:dataGrid var="model" value="#{statistiqueFutureBean.listModel}" columns="2" layout="grid"
+        rows="12" paginator="true" id="cars"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="4,8,16">
+ 
+        <f:facet name="header">
+            Real Time Statistic
+        </f:facet>
+ 
+        <p:panel header="#{model.volumeTitle}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+                <p:chart type="line" model="#{model.lineModelVolume}"/>
+            </h:panelGrid>
+        </p:panel>
+        
+         <p:panel header="#{model.priceTitle}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+                <p:chart type="line" model="#{model.lineModelPrice}"/>
+            </h:panelGrid>
+        </p:panel>
+        
+    </p:dataGrid>
 </h:form>
-
-
-
+	
 	</ui:define>
 
 	<ui:define name="body">

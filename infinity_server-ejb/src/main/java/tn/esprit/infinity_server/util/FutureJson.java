@@ -3,6 +3,7 @@ package tn.esprit.infinity_server.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Exchanger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -73,17 +74,30 @@ public class FutureJson {
 		return lst;
 	}
 	
-	public void currencyConvertion(String from,String to)
+	public Exchange currencyConvertion(String from)
 	{
+		Exchange exchange = new Exchange();
 		String response = HttpRequest
 				.get("https://v3.exchangerate-api.com/bulk/428d417084fe51418dc991a4/"+from)
 				.accept("application/json").body();
 		JSONObject jsonObject = new JSONObject(response);
-		//
 		JSONObject status = jsonObject.getJSONObject("rates");
-		Double eur = status.getDouble(to);
-		System.out.println(eur*200);
+		exchange.setUsd(status.getDouble("usd")+"");
+		exchange.setEur(status.getDouble("eur")+"");
+		exchange.setAud(status.getDouble("aud")+"");
+		exchange.setCad(status.getDouble("cad")+"");
+		exchange.setCny(status.getDouble("cny")+"");
+		exchange.setInr(status.getDouble("inr")+"");
+		exchange.setGpb(status.getDouble("gpb")+"");
+		exchange.setJpy(status.getDouble("jpy")+"");
+		exchange.setRub(status.getDouble("rub")+"");
+		exchange.setTnd(status.getDouble("tnd")+"");
+		return exchange;
+		
+	
 	}
+	
+	
 	
 	
 }

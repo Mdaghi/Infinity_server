@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="head-end">
+		<ui:param name="renderBreadCrumb" value="false" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h2 class="align-center">Statistic Future Contract</h2>
+
+		<h:form id="form">
+
+			<div class="ui-g-12 ui-md-4" style="margin-left: 40%">
+				<div class="ui-inputgroup">
+					<p:inputText placeholder="Symbol"
+						value="#{statistiqueFutureBean.search}">
+						<p:ajax event="keyup" update="form:data"
+							listener="#{statistiqueFutureBean.handleKeyEvent()}" />
+					</p:inputText>
+					<p:commandButton icon="fa fa-search" styleClass="white-button" />
+				</div>
+			</div>
+
+
+			<br />
+			<br />
+			<br />
+			<br />
+			
+			
+			<p:dataGrid var="model" value="#{statistiqueFutureBean.listModel}"
+				id="data" columns="1" layout="grid" rows="6" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="4,8,16">
+
+				<f:facet name="header">Real Time Statistic</f:facet>
+
+				<p:panel header="#{model.priceTitle}"
+					style="text-align:center;background-color: #fcf3cf ">
+					<h:panelGrid style="width:100%">
+						<p:chart type="line" model="#{model.lineModelVolume}" />
+					</h:panelGrid>
+					<br />
+					<h:panelGrid style="width:100%">
+						<p:chart type="line" model="#{model.lineModelPrice}" />
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+		</h:form>
+
+	</ui:define>
+
+	<ui:define name="body">
+		<script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister()
+                    }
+                });*/
+
+                 window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+	</ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/templateAdmin.xhtml">
+
+	<ui:define name="head-end">
+		<ui:param name="renderBreadCrumb" value="false" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h2 class="align-center">Manage Future</h2>
+		<!--  -->
+
+
+		<h:form id="form">
+
+			<div class="ui-g-12 ui-md-4" style="margin-left: 40%">
+				<div class="ui-inputgroup">
+					<p:inputText placeholder="Symbol"
+						value="#{manageFutureBean.search}">
+						<p:ajax event="keyup" update="form:data"
+							listener="#{manageFutureBean.handleKeyEvent()}" />
+					</p:inputText>
+					<p:commandButton icon="fa fa-search" styleClass="white-button" />
+				</div>
+			</div>
+
+
+			<br />
+			<br />
+			<br />
+
+			<p:commandButton style="margin-left:1%"
+				oncomplete="PF('futureAddDialog').show()" styleClass="btn-success"
+				title="ADD" value="ADD">
+			</p:commandButton>
+			<br />
+			<br />
+
+
+			<p:dataTable var="future"
+				value="#{manageFutureBean.listContractDataTable}" paginator="true"
+				rows="5" id="data">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="List" />
+					</p:outputPanel>
+				</f:facet>
+
+
+				<p:column headerText="Id" style="width:32px">
+					<h:outputText value="#{future.id}" />
+				</p:column>
+
+				<p:column headerText="Name" style="width:90px">
+					<h:outputText value="#{future.symbol}" />
+				</p:column>
+
+				<p:column headerText="Maturity Price" style="width:90px">
+					<h:outputText value="#{future.maturityPrice}" />
+				</p:column>
+
+				<p:column headerText="Maturity Date" style="width:90px">
+					<h:outputText value="#{future.dateMaturite}" />
+				</p:column>
+
+				<p:column headerText="Contract size" style="width:90px">
+					<h:outputText value="#{future.size}" />
+				</p:column>
+
+
+				<p:column style="width:32px;text-align: center" headerText="Delete">
+					<p:commandButton
+						action="#{manageFutureBean.delete(manageFutureBean.futureContract.id)}"
+						update="form:data" styleClass="btn-danger" icon="fa fa-trash">
+						<f:setPropertyActionListener value="#{future}"
+							target="#{manageFutureBean.futureContract}" />
+						<p:confirm header="Confirmation" message="Are you sure?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:column>
+
+				<p:column style="width:32px;text-align: center" headerText="Update">
+					<p:commandButton update=":form:futureUpdate"
+						oncomplete="PF('symbolUpdateDialog').show()"
+						styleClass="btn-warning" title="View" headerText="Update"
+						icon="fa fa-refresh" >
+						<f:setPropertyActionListener value="#{future.symbol}"
+							target="#{manageFutureBean.name}" />
+						<f:setPropertyActionListener value="#{future.dateMaturite}"
+							target="#{manageFutureBean.date}" />
+						<f:setPropertyActionListener value="#{future.maturityPrice}"
+							target="#{manageFutureBean.price}" />
+						<f:setPropertyActionListener value="#{future.size}"
+							target="#{manageFutureBean.size}" />
+							<f:setPropertyActionListener value="#{future.id}"
+							target="#{manageFutureBean.id}" />
+					</p:commandButton>
+				</p:column>
+
+
+
+				<p:column style="width:32px;text-align: center"
+					headerText="Speculation">
+					<p:commandButton update=":form:symbolSpeculation"
+						oncomplete="PF('symbolSpeculationDialog').show()"
+						styleClass="btn-info" title="View" headerText="Speculation"
+						icon="fa fa-search">
+						<f:setPropertyActionListener value="#{future}"
+							target="#{manageFutureBean.futureContract}" />
+					</p:commandButton>
+				</p:column>
+
+
+
+
+
+			</p:dataTable>
+
+			<!-- Dialog -->
+
+			<p:dialog header="Future Speculation"
+				widgetVar="symbolSpeculationDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false">
+				<p:outputPanel id="symbolSpeculation" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty manageFutureBean.futureContract}"
+						columnClasses="value,value">
+
+
+						<h:outputText value="Id" />
+						<h:outputText value="#{manageFutureBean.futureContract.id}" />
+
+						<h:outputText value="Name" />
+						<h:outputText value="#{manageFutureBean.futureContract.symbol}" />
+
+						<h:outputText value="Maturity Price" />
+						<h:outputText
+							value="#{manageFutureBean.futureContract.maturityPrice}" />
+
+						<h:outputText value="Maturity Date" />
+						<h:outputText
+							value="#{manageFutureBean.futureContract.dateMaturite}" />
+
+						<h:outputText value="Contract size" />
+						<h:outputText value="#{manageFutureBean.futureContract.size}" />
+
+						<h:outputText value="Change" />
+						<h:outputText value="#{manageFutureBean.futureContract.netChange}"
+							style="#{manageFutureBean.futureContract.netChange.contains('-')  ? 'color:red' : 'color:green'}" />
+
+						<h:outputText value="% Change" />
+						<h:outputText
+							value="#{manageFutureBean.futureContract.percentChange}"
+							style="#{manageFutureBean.futureContract.percentChange.contains('-')  ? 'color:red' : 'color:green'}" />
+
+						<h:outputText value="Gain" />
+						<h:outputText value="#{manageFutureBean.futureContract.gain}" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog header="Add Future Contract" widgetVar="futureAddDialog"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="futureAdd">
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+
+						<h:outputLabel value="Name :" />
+
+
+						<p:selectOneMenu effect="fade"
+							style="width:160px;margin-bottom:10%" filter="true"
+							value="#{manageFutureBean.name}" placeholder="name"
+							filterMatchMode="startsWith">
+							<f:selectItems value="#{manageFutureBean.listNameSymbole}" />
+						</p:selectOneMenu>
+
+
+
+						<h:outputLabel value="Maturity Price :  " />
+
+						<p:inputText placeholder="Price" value="#{manageFutureBean.price}"
+							style="margin-bottom:10%">
+						</p:inputText>
+
+						<h:outputLabel value="Bershell Number :  " />
+
+
+						<p:inputText placeholder="Bershell"
+							value="#{manageFutureBean.size}" style="margin-bottom:10%">
+						</p:inputText>
+
+
+						<p:outputLabel value="Maturity date :  " />
+						<p:calendar value="#{manageFutureBean.date}"
+							style="margin-bottom:10%" navigator="true" pattern="d/M/yyyy" />
+
+
+
+						<p:commandButton value="Add" styleClass="btn-success"
+							oncomplete="PF('futureAddDialog').hide();"
+							actionListener="#{manageFutureBean.ajouter()}"
+							style="margin-top:10%" />
+
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog header="Update Future Contract"
+				widgetVar="symbolUpdateDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false">
+				<p:outputPanel id="futureUpdate">
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+
+						<h:outputLabel value="Name :" />
+
+
+						<p:selectOneMenu effect="fade"
+							style="width:160px;margin-bottom:10%" filter="true"
+							value="#{manageFutureBean.name}" placeholder="name"
+							filterMatchMode="startsWith">
+							<f:selectItems value="#{manageFutureBean.listNameSymbole}" />
+						</p:selectOneMenu>
+
+
+
+						<h:outputLabel value="Maturity Price :  " />
+
+						<p:inputText placeholder="Price" value="#{manageFutureBean.price}"
+							style="margin-bottom:10%">
+						</p:inputText>
+
+						<h:outputLabel value="Bershell Number :  " />
+
+
+						<p:inputText placeholder="Bershell"
+							value="#{manageFutureBean.size}" style="margin-bottom:10%">
+						</p:inputText>
+
+
+						 <p:outputLabel value="Maturity date :  " />
+						<p:calendar value="#{manageFutureBean.date}"
+							style="margin-bottom:10%" navigator="true" pattern="d/M/yyyy" /> 
+							
+						
+
+
+						<p:commandButton styleClass="btn-warning" value="update"
+							oncomplete="PF('symbolUpdateDialog').hide();"
+							actionListener="#{manageFutureBean.update()}"
+							style="margin-top:10%" 
+							update=":form:data"/>
+
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+		<!--  -->
+	</ui:define>
+
+	<ui:define name="body">
+		<script type="text/javascript">
+            /*if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register('sw.js');
+             }*/
+
+
+            if ('serviceWorker' in navigator) {
+              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister()
+                    }
+                });*/
+
+                 window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('sw.js').then(function (registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+	</ui:define>
+</ui:composition>

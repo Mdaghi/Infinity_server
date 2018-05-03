@@ -23,5 +23,4 @@ public interface SymboleServiceRemote {
 	public long countSymbole();
 	public long countSymboleByCritere(String critere);
 	public Symbole getSymboleByName(String name);
-
 }
