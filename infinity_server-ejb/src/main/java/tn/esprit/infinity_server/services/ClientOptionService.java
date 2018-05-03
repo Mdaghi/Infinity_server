@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
@@ -23,6 +24,7 @@ import tn.esprit.infinity_server.persistence.WatchList;
 import tn.esprit.infinity_server.interfaces.OptionRemote;
 
 @Stateless
+@LocalBean
 public class ClientOptionService implements OptionRemote{
 
 	@PersistenceContext(unitName="infinity_server-ejb")

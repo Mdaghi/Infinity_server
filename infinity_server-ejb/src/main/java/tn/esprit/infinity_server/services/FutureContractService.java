@@ -1,14 +1,12 @@
 package tn.esprit.infinity_server.services;
 
-
 import java.util.List;
-
-
 import javax.ejb.LocalBean;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+
 
 
 import tn.esprit.infinity_server.interfaces.FutureContractServiceLocal;
@@ -28,74 +26,75 @@ public class FutureContractService implements FutureContractServiceRemote, Futur
 
 	@PersistenceContext(unitName = "infinity_server-ejb")
 	EntityManager em;
-	
 
 	@Override
 	public void createFutureContract(FutureContract future) {
-		em.persist(future);
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateFutureContract(FutureContract future) {
-		em.merge(future);	
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void removeFutureContract(int id) {
-		FutureContract f = em.find(FutureContract.class,id);
-		em.remove(f);	
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public FutureContract findFutureContractById(Integer id) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<FutureContract> findAllFutureContract() {
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<FutureContract> searchDynamiqueFutureContract(String name) {
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 	@Override
 	public List<Future> showFutureData() {
-		return null;	
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 	@Override
 	public List<Future> showHistoriqueDataBySymbole(String symbole) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
-	
+
+	@Override
 	public List<Future> showFutureData(String symbols) {
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public Exchange currencyConvertion(String from)
-	{
-		
+	public Exchange currencyConvertion(String from) {
+		// TODO Auto-generated method stub
 		return null;
-		
 	}
+
 	@Override
-	public List<Information> realTimeInfo(String info)
-	{
-		
+	public List<Information> realTimeInfo(String info) {
+		// TODO Auto-generated method stub
 		return null;
-		
 	}
 	
+	
+
 	
 
 	
